@@ -3,194 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>元气弹工作室 - 创造快乐的游戏体验</title>
+    <title>元气弹工作室 | 独立游戏开发团队</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
         
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
+            background-color: #0f172a;
+            color: #e2e8f0;
         }
         
-        .hero {
-            background: linear-gradient(135deg, #ff5e62, #ff9966);
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
         }
         
         .game-card {
             transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform-style: preserve-3d;
         }
         
         .game-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
         
-        .nav-link {
+        .glow-effect {
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px #3b82f6;
+            }
+            to {
+                box-shadow: 0 0 20px #3b82f6;
+            }
+        }
+        
+        .pixel-border {
+            border: 4px solid #3b82f6;
             position: relative;
         }
         
-        .nav-link::after {
-            content: '';
+        .pixel-border::before {
+            content: "";
             position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background-color: #ff5e62;
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        .language-selector {
-            transition: all 0.3s ease;
-        }
-        
-        .language-selector:hover {
-            transform: scale(1.1);
-        }
-        
-        .footer-wave {
-            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%23ff9966" opacity=".25"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="%23ff5e62" opacity=".5"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23ff9966"/></svg>');
-            background-size: cover;
-            background-repeat: no-repeat;
-            height: 150px;
-            width: 100%;
-            transform: rotate(180deg);
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-        
-        .floating {
-            animation: float 3s ease-in-out infinite;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 4px solid #3b82f6;
+            z-index: -1;
         }
     </style>
 </head>
 <body>
-    <!-- 语言切换按钮 -->
-    <div class="fixed top-4 right-4 z-50 flex space-x-2">
-        <button onclick="changeLanguage('zh')" class="language-selector bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-red-100">
-            <span class="text-lg font-bold">中</span>
-        </button>
-        <button onclick="changeLanguage('en')" class="language-selector bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-blue-100">
-            <span class="text-lg font-bold">EN</span>
-        </button>
-        <button onclick="changeLanguage('ja')" class="language-selector bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md hover:bg-red-100">
-            <span class="text-lg font-bold">日</span>
-        </button>
-    </div>
-
     <!-- 导航栏 -->
-    <nav class="bg-white shadow-md sticky top-0 z-40">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="w-12 h-12 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
-                    元
+    <nav class="bg-slate-900/80 backdrop-blur-md fixed w-full z-50 border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <span class="text-blue-400 text-xl font-bold">元气弹工作室</span>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="#home" class="text-blue-400 hover:text-blue-300 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                            <a href="#games" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">游戏作品</a>
+                            <a href="#about" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">关于我们</a>
+                            <a href="#team" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">团队成员</a>
+                            <a href="#contact" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">联系我们</a>
+                        </div>
+                    </div>
                 </div>
-                <span class="text-2xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">元气弹工作室</span>
+                <div class="hidden md:block">
+                    <div class="ml-4 flex items-center md:ml-6">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium glow-effect">
+                            加入QQ群
+                        </button>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <span class="sr-only">打开菜单</span>
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
             </div>
-            
-            <div class="hidden md:flex space-x-8">
-                <a href="#home" class="nav-link text-gray-800 font-medium">首页</a>
-                <a href="#games" class="nav-link text-gray-800 font-medium">游戏作品</a>
-                <a href="#about" class="nav-link text-gray-800 font-medium">关于我们</a>
-                <a href="#news" class="nav-link text-gray-800 font-medium">新闻动态</a>
-                <a href="#contact" class="nav-link text-gray-800 font-medium">联系我们</a>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="text-blue-400 block px-3 py-2 rounded-md text-base font-medium">首页</a>
+                <a href="#games" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">游戏作品</a>
+                <a href="#about" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">关于我们</a>
+                <a href="#team" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">团队成员</a>
+                <a href="#contact" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">联系我们</a>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white w-full px-3 py-2 rounded-md text-base font-medium mt-2">
+                    加入QQ群
+                </button>
             </div>
-            
-            <button class="md:hidden text-gray-800">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
         </div>
     </nav>
 
-    <!-- 英雄区域 -->
-    <section id="home" class="hero text-white py-20 md:py-32 relative overflow-hidden">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 mb-10 md:mb-0">
-                <h1 class="text-4xl md:text-6xl font-bold mb-6">创造快乐的游戏体验</h1>
-                <p class="text-xl mb-8">元气弹工作室致力于开发充满创意与乐趣的游戏，为玩家带来独特的游戏体验。</p>
-                <div class="flex space-x-4">
-                    <button class="bg-white text-red-500 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition duration-300 shadow-lg">
-                        了解我们的游戏
-                    </button>
-                    <button class="border-2 border-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-red-500 transition duration-300 shadow-lg">
-                        加入我们
-                    </button>
+    <!-- 首页英雄区域 -->
+    <section id="home" class="hero-gradient min-h-screen flex items-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                        <span class="text-blue-400">元气弹工作室</span> <br>
+                        <span class="text-3xl md:text-4xl">创造令人难忘的游戏体验</span>
+                    </h1>
+                    <p class="text-lg text-gray-300 mb-8">
+                        我们是一支充满激情的独立游戏开发团队，致力于打造独特而富有创意的游戏作品。
+                        通过精心设计的游戏机制和引人入胜的故事，我们希望为玩家带来全新的游戏体验。
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105">
+                            探索我们的游戏 <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                        <button class="border border-blue-400 text-blue-400 hover:bg-blue-400/10 px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105">
+                            观看预告片 <i class="fas fa-play ml-2"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="md:w-1/2 flex justify-center">
-                <img src="https://via.placeholder.com/500x400/ff9966/ffffff?text=元气弹工作室" alt="元气弹工作室" class="rounded-lg shadow-2xl floating max-w-full h-auto">
+                <div class="relative">
+                    <div class="pixel-border rounded-lg overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="游戏截图" class="w-full h-auto">
+                    </div>
+                    <div class="absolute -bottom-5 -right-5 bg-blue-600 text-white px-4 py-2 rounded-lg font-bold">
+                        新作发布!
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 游戏作品 -->
-    <section id="games" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">我们的游戏作品</h2>
+    <!-- 游戏作品区域 -->
+    <section id="games" class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                    <span class="text-blue-400">我们的</span> 游戏作品
+                </h2>
+                <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+                    每一款游戏都是我们心血的结晶，融合了创新玩法与引人入胜的故事情节。
+                </p>
+            </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 游戏卡片1 -->
-                <div class="game-card bg-white rounded-xl overflow-hidden shadow-lg">
+                <!-- 游戏1 -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden shadow-lg">
                     <div class="relative">
-                        <img src="https://via.placeholder.com/400x225/ff9966/ffffff?text=冒险岛" alt="冒险岛" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-sm font-bold">
+                        <img src="https://images.unsplash.com/photo-1586182987320-4f376d39d787?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" 
+                             alt="星海漫游者" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded">
                             新作
                         </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">冒险岛物语</h3>
-                        <p class="text-gray-600 mb-4">一款充满奇幻色彩的冒险游戏，探索神秘岛屿，解开古老谜题。</p>
+                        <h3 class="text-xl font-bold text-white mb-2">星海漫游者</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            在这款开放世界太空冒险游戏中，探索程序生成的浩瀚星系。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-900/50 text-blue-300 text-xs px-2 py-1 rounded">太空</span>
+                            <span class="bg-blue-900/50 text-blue-300 text-xs px-2 py-1 rounded">探索</span>
+                            <span class="bg-blue-900/50 text-blue-300 text-xs px-2 py-1 rounded">角色扮演</span>
+                        </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">2023年发售</span>
-                            <button class="bg-red-500 text-white px-4 py-2 rounded-full text-sm hover:bg-red-600 transition duration-300">
-                                了解更多
+                            <div class="text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="text-gray-400 ml-1 text-sm">4.7</span>
+                            </div>
+                            <button class="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                                了解更多 <i class="fas fa-chevron-right ml-1"></i>
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <!-- 游戏卡片2 -->
-                <div class="game-card bg-white rounded-xl overflow-hidden shadow-lg">
+                <!-- 游戏2 -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden shadow-lg">
                     <div class="relative">
-                        <img src="https://via.placeholder.com/400x225/ff5e62/ffffff?text=像素英雄" alt="像素英雄" class="w-full h-48 object-cover">
+                        <img src="https://images.unsplash.com/photo-1551103782-8ab0493f16a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" 
+                             alt="像素地牢" class="w-full h-48 object-cover">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">像素英雄传</h3>
-                        <p class="text-gray-600 mb-4">复古像素风格的RPG游戏，培养你的英雄，拯救像素世界。</p>
+                        <h3 class="text-xl font-bold text-white mb-2">像素地牢</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            复古风格的Roguelike游戏，具有永久死亡机制和无限地牢探索。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-900/50 text-blue-300 text-xs px-2 py-1 rounded">Roguelike</span>
+                            <span class="bg-blue-900/50 text-blue-300 text-xs px-2 py-1 rounded">复古</span>
+                            <span class="bg-blue-900/50 text-blue-300 text-xs px-2 py-1 rounded">硬核</span>
+                        </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">已发售</span>
-                            <button class="bg-red-500 text-white px-4 py-2 rounded-full text-sm hover:bg-red-600 transition duration-300">
-                                立即购买
+                            <div class="text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span class="text-gray-400 ml-1 text-sm">4.2</span>
+                            </div>
+                            <button class="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                                了解更多 <i class="fas fa-chevron-right ml-1"></i>
                             </button>
                         </div>
                     </div>
                 </div>
                 
-                <!-- 游戏卡片3 -->
-                <div class="game-card bg-white rounded-xl overflow-hidden shadow-lg">
+                <!-- 游戏3 -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden shadow-lg">
                     <div class="relative">
-                        <img src="https://via.placeholder.com/400x225/ff9966/ffffff?text=太空冒险" alt="太空冒险" class="w-full h-48 object-cover">
+                        <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" 
+                             alt="赛博飞车2077" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded">
+                            即将推出
+                        </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">星际漫游者</h3>
-                        <p class="text-gray-600 mb-4">探索浩瀚宇宙，建立你的太空站，与外星文明交流。</p>
+                        <h3 class="text-xl font-bold text-white mb-2">赛博飞车2077</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            霓虹灯下的未来风格赛车游戏，支持车辆改装和在线多人模式。
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-900/50 text-blue-300 text-xs px-2 py-1 rounded">竞速</span>
+                            <span class="bg-blue-900/50 text-blue-300 text-xs px-2 py-1 rounded">赛博朋克</span>
+                            <span class="bg-blue-900/50 text-blue-300 text-xs px-2 py-1 rounded">多人</span>
+                        </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-sm text-gray-500">开发中</span>
-                            <button class="bg-gray-500 text-white px-4 py-2 rounded-full text-sm hover:bg-gray-600 transition duration-300">
-                                敬请期待
+                            <div class="text-gray-400 text-sm">
+                                2023年第四季度推出
+                            </div>
+                            <button class="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                                加入愿望单 <i class="fas fa-chevron-right ml-1"></i>
                             </button>
                         </div>
                     </div>
@@ -198,63 +256,57 @@
             </div>
             
             <div class="text-center mt-12">
-                <button class="border-2 border-red-500 text-red-500 px-6 py-3 rounded-full font-bold hover:bg-red-500 hover:text-white transition duration-300">
-                    查看全部游戏
+                <button class="border border-blue-400 text-blue-400 hover:bg-blue-400/10 px-6 py-3 rounded-lg font-medium">
+                    查看全部游戏 <i class="fas fa-chevron-down ml-2"></i>
                 </button>
             </div>
         </div>
     </section>
 
-    <!-- 关于我们 -->
-    <section id="about" class="py-16 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
-                    <h2 class="text-3xl font-bold mb-6">关于元气弹工作室</h2>
-                    <p class="text-gray-700 mb-4">
-                        元气弹工作室成立于2018年，由一群热爱游戏的开发者组成。我们相信游戏不仅仅是娱乐，更是连接人与人之间的桥梁。
+    <!-- 关于我们区域 -->
+    <section id="about" class="py-20 bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="order-2 lg:order-1">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                        <span class="text-blue-400">关于</span> 元气弹工作室
+                    </h2>
+                    <p class="text-gray-400 mb-6">
+                        元气弹工作室成立于2018年，由一群热爱游戏的开发者组成。最初我们只是一个小型独立团队，如今已发展成为拥有15名成员的创意工作室，致力于打造令人难忘的游戏体验。
                     </p>
-                    <p class="text-gray-700 mb-4">
-                        我们的使命是创造富有创意、充满乐趣的游戏体验，让玩家在游戏中找到快乐与感动。
+                    <p class="text-gray-400 mb-8">
+                        我们相信游戏具有讲述故事、连接人与人以及突破互动娱乐边界的独特力量。每一个项目都是我们创新和激发灵感的契机。
                     </p>
-                    <p class="text-gray-700 mb-6">
-                        目前团队有15名成员，包括程序员、美术设计师、游戏策划和音效师。我们虽然规模不大，但每个人都充满热情，致力于打造精品游戏。
-                    </p>
-                    <button class="bg-red-500 text-white px-6 py-3 rounded-full font-bold hover:bg-red-600 transition duration-300">
-                        加入我们的团队
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-slate-800 p-4 rounded-lg">
+                            <div class="text-blue-400 text-3xl font-bold mb-2">5+</div>
+                            <div class="text-gray-300 text-sm">已发布游戏</div>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg">
+                            <div class="text-blue-400 text-3xl font-bold mb-2">200万+</div>
+                            <div class="text-gray-300 text-sm">全球玩家</div>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg">
+                            <div class="text-blue-400 text-3xl font-bold mb-2">15</div>
+                            <div class="text-gray-300 text-sm">团队成员</div>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg">
+                            <div class="text-blue-400 text-3xl font-bold mb-2">7</div>
+                            <div class="text-gray-300 text-sm">行业奖项</div>
+                        </div>
+                    </div>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">
+                        阅读开发日志 <i class="fas fa-newspaper ml-2"></i>
                     </button>
                 </div>
-                <div class="md:w-1/2">
-                    <div class="bg-white p-6 rounded-xl shadow-lg">
-                        <h3 class="text-xl font-bold mb-4 text-center">我们的价值观</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div class="bg-red-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-heart text-red-500 text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold mb-1">热爱游戏</h4>
-                                    <p class="text-gray-600">我们热爱游戏，并希望通过我们的作品传递这份热爱。</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="bg-orange-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-lightbulb text-orange-500 text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold mb-1">创新精神</h4>
-                                    <p class="text-gray-600">我们不断探索新的游戏机制和玩法，为玩家带来新鲜体验。</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="bg-blue-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-users text-blue-500 text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold mb-1">玩家至上</h4>
-                                    <p class="text-gray-600">我们始终将玩家的体验放在首位，倾听玩家的反馈。</p>
-                                </div>
-                            </div>
+                <div class="order-1 lg:order-2">
+                    <div class="relative">
+                        <div class="pixel-border rounded-lg overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1600861195091-690c92f1d2cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                                 alt="我们的工作室" class="w-full h-auto">
+                        </div>
+                        <div class="absolute -bottom-5 -left-5 bg-blue-600 text-white px-4 py-2 rounded-lg font-bold">
+                            认识团队
                         </div>
                     </div>
                 </div>
@@ -262,192 +314,282 @@
         </div>
     </section>
 
-    <!-- 新闻动态 -->
-    <section id="news" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">新闻动态</h2>
+    <!-- 团队成员区域 -->
+    <section id="team" class="py-20 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                    <span class="text-blue-400">认识</span> 我们的团队
+                </h2>
+                <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+                    一群充满创意的设计师、程序员和梦想家，因对游戏的热爱而相聚。
+                </p>
+            </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 新闻1 -->
-                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <img src="https://via.placeholder.com/400x225/ff5e62/ffffff?text=新闻1" alt="新闻图片" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                            <span>2023年6月15日</span>
-                            <span class="mx-2">•</span>
-                            <span>新闻</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">《冒险岛物语》荣获2023年度最佳独立游戏提名</h3>
-                        <p class="text-gray-600 mb-4">我们很高兴地宣布，《冒险岛物语》已获得2023年度最佳独立游戏提名...</p>
-                        <a href="#" class="text-red-500 font-medium hover:text-red-600 flex items-center">
-                            阅读更多 <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- 成员1 -->
+                <div class="bg-slate-800 rounded-xl p-6 text-center">
+                    <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-500">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="陈小雨" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">陈小雨</h3>
+                    <p class="text-blue-400 text-sm mb-4">创意总监</p>
+                    <p class="text-gray-400 text-sm mb-4">
+                        负责所有项目的艺术方向和游戏设计。
+                    </p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-weibo"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-bilibili"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-github"></i></a>
                     </div>
                 </div>
                 
-                <!-- 新闻2 -->
-                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <img src="https://via.placeholder.com/400x225/ff9966/ffffff?text=新闻2" alt="新闻图片" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                            <span>2023年5月28日</span>
-                            <span class="mx-2">•</span>
-                            <span>更新</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">《像素英雄传》1.2版本更新现已上线</h3>
-                        <p class="text-gray-600 mb-4">本次更新带来了全新的地下城、更多装备和技能，以及多项游戏体验优化...</p>
-                        <a href="#" class="text-red-500 font-medium hover:text-red-600 flex items-center">
-                            阅读更多 <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
+                <!-- 成员2 -->
+                <div class="bg-slate-800 rounded-xl p-6 text-center">
+                    <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-500">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="张大力" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">张大力</h3>
+                    <p class="text-blue-400 text-sm mb-4">主程序员</p>
+                    <p class="text-gray-400 text-sm mb-4">
+                        构建让游戏栩栩如生的技术基础。
+                    </p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-weibo"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-bilibili"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-github"></i></a>
                     </div>
                 </div>
                 
-                <!-- 新闻3 -->
-                <div class="bg-gray-50 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition duration-300">
-                    <img src="https://via.placeholder.com/400x225/ff5e62/ffffff?text=新闻3" alt="新闻图片" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <div class="flex items-center text-sm text-gray-500 mb-2">
-                            <span>2023年4月10日</span>
-                            <span class="mx-2">•</span>
-                            <span>活动</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">参加2023中国独立游戏节，与开发者面对面</h3>
-                        <p class="text-gray-600 mb-4">元气弹工作室将参加今年7月在上海举行的中国独立游戏节，届时将展示我们的最新作品...</p>
-                        <a href="#" class="text-red-500 font-medium hover:text-red-600 flex items-center">
-                            阅读更多 <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
+                <!-- 成员3 -->
+                <div class="bg-slate-800 rounded-xl p-6 text-center">
+                    <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-500">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="李明月" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">李明月</h3>
+                    <p class="text-blue-400 text-sm mb-4">美术总监</p>
+                    <p class="text-gray-400 text-sm mb-4">
+                        塑造游戏世界的视觉风格和美学。
+                    </p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-weibo"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-bilibili"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-artstation"></i></a>
+                    </div>
+                </div>
+                
+                <!-- 成员4 -->
+                <div class="bg-slate-800 rounded-xl p-6 text-center">
+                    <div class="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-blue-500">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="王音" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-1">王音</h3>
+                    <p class="text-blue-400 text-sm mb-4">音效设计师</p>
+                    <p class="text-gray-400 text-sm mb-4">
+                        创造沉浸式的音频环境和难忘的配乐。
+                    </p>
+                    <div class="flex justify-center space-x-3">
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-weibo"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-bilibili"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-soundcloud"></i></a>
                     </div>
                 </div>
             </div>
             
             <div class="text-center mt-12">
-                <button class="border-2 border-red-500 text-red-500 px-6 py-3 rounded-full font-bold hover:bg-red-500 hover:text-white transition duration-300">
-                    查看更多新闻
+                <p class="text-gray-400 mb-6">
+                    我们一直在寻找充满热情的人才加入我们的团队。
+                </p>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">
+                    查看招聘职位 <i class="fas fa-briefcase ml-2"></i>
                 </button>
             </div>
         </div>
     </section>
 
-    <!-- 联系我们 -->
-    <section id="contact" class="relative">
-        <div class="footer-wave"></div>
-        <div class="bg-red-500 py-16">
-            <div class="container mx-auto px-4">
-                <h2 class="text-3xl font-bold text-white text-center mb-12">联系我们</h2>
-                
-                <div class="flex flex-col md:flex-row justify-between">
-                    <div class="md:w-1/3 mb-10 md:mb-0">
-                        <h3 class="text-xl font-bold text-white mb-4">联系方式</h3>
-                        <ul class="space-y-3">
-                            <li class="flex items-center text-white">
-                                <i class="fas fa-envelope mr-3"></i> contact@yuanqidan.com
-                            </li>
-                            <li class="flex items-center text-white">
-                                <i class="fas fa-phone mr-3"></i> +86 123 4567 8910
-                            </li>
-                            <li class="flex items-center text-white">
-                                <i class="fas fa-map-marker-alt mr-3"></i> 中国上海市浦东新区张江高科技园区
-                            </li>
-                        </ul>
-                    </div>
+    <!-- 联系我们区域 -->
+    <section id="contact" class="py-20 bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                        <span class="text-blue-400">联系</span> 我们
+                    </h2>
+                    <p class="text-gray-400 mb-8">
+                        对我们的游戏感兴趣？想要合作？我们很乐意听取您的意见！
+                    </p>
                     
-                    <div class="md:w-1/3 mb-10 md:mb-0">
-                        <h3 class="text-xl font-bold text-white mb-4">关注我们</h3>
-                        <div class="flex space-x-4">
-                            <a href="#" class="bg-white text-red-500 w-12 h-12 rounded-full flex items-center justify-center hover:bg-gray-100 transition duration-300">
-                                <i class="fab fa-weibo text-2xl"></i>
-                            </a>
-                            <a href="#" class="bg-white text-red-500 w-12 h-12 rounded-full flex items-center justify-center hover:bg-gray-100 transition duration-300">
-                                <i class="fab fa-weixin text-2xl"></i>
-                            </a>
-                            <a href="#" class="bg-white text-red-500 w-12 h-12 rounded-full flex items-center justify-center hover:bg-gray-100 transition duration-300">
-                                <i class="fab fa-bilibili text-2xl"></i>
-                            </a>
-                            <a href="#" class="bg-white text-red-500 w-12 h-12 rounded-full flex items-center justify-center hover:bg-gray-100 transition duration-300">
-                                <i class="fab fa-steam text-2xl"></i>
-                            </a>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-600 rounded-lg p-3">
+                                <i class="fas fa-envelope text-white"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-white">电子邮件</h3>
+                                <p class="text-blue-400">contact@yuanqidan.com</p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="md:w-1/3">
-                        <h3 class="text-xl font-bold text-white mb-4">订阅我们的新闻</h3>
-                        <p class="text-white mb-4">订阅我们的新闻通讯，获取最新游戏资讯和优惠信息。</p>
-                        <div class="flex">
-                            <input type="email" placeholder="您的邮箱地址" class="px-4 py-3 rounded-l-full w-full focus:outline-none">
-                            <button class="bg-white text-red-500 px-6 py-3 rounded-r-full font-bold hover:bg-gray-100 transition duration-300">
-                                订阅
-                            </button>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-600 rounded-lg p-3">
+                                <i class="fab fa-qq text-white"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-white">QQ群</h3>
+                                <p class="text-blue-400">123456789</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 bg-blue-600 rounded-lg p-3">
+                                <i class="fab fa-weibo text-white"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-white">微博</h3>
+                                <p class="text-blue-400">@元气弹工作室</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+                
+                <div class="bg-slate-800 rounded-xl p-8">
+                    <h3 class="text-xl font-bold text-white mb-6">发送消息</h3>
+                    <form>
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-300 text-sm font-medium mb-2">您的姓名</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-300 text-sm font-medium mb-2">电子邮箱</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
+                        </div>
+                        <div class="mb-6">
+                            <label for="subject" class="block text-gray-300 text-sm font-medium mb-2">主题</label>
+                            <select id="subject" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
+                                <option value="">选择主题</option>
+                                <option value="support">游戏支持</option>
+                                <option value="business">商业合作</option>
+                                <option value="press">媒体咨询</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-300 text-sm font-medium mb-2">消息内容</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-300">
+                            发送消息 <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
+        </div>
+    </section>
+
+    <!-- 订阅区域 -->
+    <section class="py-16 bg-blue-900/20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">
+                获取最新资讯
+            </h2>
+            <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
+                订阅我们的新闻通讯，获取游戏公告、开发更新和独家内容。
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input type="email" placeholder="您的电子邮箱" class="flex-grow px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white">
+                <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg whitespace-nowrap">
+                    订阅 <i class="fas fa-envelope-open-text ml-2"></i>
+                </button>
+            </div>
+            <p class="text-gray-500 text-xs mt-4">
+                我们尊重您的隐私，您可以随时取消订阅。
+            </p>
         </div>
     </section>
 
     <!-- 页脚 -->
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="flex items-center mb-4 md:mb-0">
-                    <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-lg mr-2">
-                        元
+    <footer class="bg-slate-900 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-blue-400 text-xl font-bold mb-4">元气弹工作室</h3>
+                    <p class="text-gray-400 text-sm">
+                        自2018年起创造数字冒险。专注于创新游戏玩法和沉浸式世界的独立游戏工作室。
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">游戏作品</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 text-sm">星海漫游者</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 text-sm">像素地牢</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 text-sm">赛博飞车2077</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 text-sm">全部游戏</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">公司信息</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 text-sm">关于我们</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 text-sm">团队成员</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 text-sm">招聘信息</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-blue-400 text-sm">开发日志</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-medium mb-4">关注我们</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-weibo"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-qq"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-bilibili"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-weixin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-steam"></i></a>
                     </div>
-                    <span class="text-xl font-bold">元气弹工作室</span>
-                </div>
-                
-                <div class="text-sm text-gray-400 mb-4 md:mb-0">
-                    © 2023 元气弹工作室 版权所有
-                </div>
-                
-                <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">隐私政策</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">使用条款</a>
-                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Cookie设置</a>
+                    <div class="text-gray-500 text-xs">
+                        © 2023 元气弹工作室。保留所有权利。
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // 语言切换功能
-        function changeLanguage(lang) {
-            alert(`已切换至${lang === 'zh' ? '中文' : lang === 'en' ? '英文' : '日文'}界面`);
-            // 实际应用中这里会加载对应的语言文件或重定向到对应语言版本的页面
-        }
-        
         // 移动端菜单切换
-        document.querySelector('.md\\:hidden').addEventListener('click', function() {
-            const navLinks = document.querySelector('.md\\:flex.space-x-8');
-            navLinks.classList.toggle('hidden');
-            navLinks.classList.toggle('flex');
-            navLinks.classList.toggle('flex-col');
-            navLinks.classList.toggle('absolute');
-            navLinks.classList.toggle('top-16');
-            navLinks.classList.toggle('left-0');
-            navLinks.classList.toggle('right-0');
-            navLinks.classList.toggle('bg-white');
-            navLinks.classList.toggle('p-4');
-            navLinks.classList.toggle('shadow-md');
-            navLinks.classList.toggle('space-y-4');
-            navLinks.classList.toggle('space-x-0');
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
         });
-        
-        // 平滑滚动
+
+        // 锚点平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
                 
-                // 如果是移动端菜单，点击后关闭菜单
-                if (window.innerWidth < 768) {
-                    const navLinks = document.querySelector('.md\\:flex.space-x-8');
-                    navLinks.classList.add('hidden');
-                    navLinks.classList.remove('flex', 'flex-col', 'absolute', 'top-16', 'left-0', 'right-0', 'bg-white', 'p-4', 'shadow-md', 'space-y-4', 'space-x-0');
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 如果移动端菜单打开则关闭它
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
                 }
             });
+        });
+
+        // 滚动时给导航栏添加阴影
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-lg');
+            } else {
+                nav.classList.remove('shadow-lg');
+            }
         });
     </script>
 </body>

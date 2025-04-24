@@ -21,6 +21,12 @@ async function fetchSteamData(appId) {
 }
 
 (async () => {
-  const allGames = await Promise.all(appIds.map(fetchSteamData));
-  fs.writeFileSync('steam/steamData.json', JSON.stringify(allGames, null, 2));
-})();
+  try {
+    const allGames = await Promise.all(appIds.map(fetchSteamData));
+    fs.writeFileSync('steamData.json', JSON.stringify(allGames, null, 2));
+    console.log('✅ Steam 数据拉取成功');
+  } catch (err) {
+    console.error('❌ 拉取 Steam 数据失败:', err);
+    process.exit(1);
+  }
+})()

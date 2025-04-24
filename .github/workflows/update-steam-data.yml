@@ -19,7 +19,7 @@ jobs:
       - run: npm install
         working-directory: steam
 
-      - run: node fetch.js
+      - run: node fetch.cjs
         working-directory: steam
 
       - name: Commit and push

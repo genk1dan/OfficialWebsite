@@ -1,0 +1,25 @@
+{
+  "nav": {
+    "home": "Home",
+    "games": "Games",
+    "about": "About Us",
+    "team": "Join Us",
+    "contact": "Contact"
+  },
+  "hero": {
+    "studio": "GD Studio",
+    "slogan": "Crafting Memorable Game Experiences",
+    "explore": "Explore Our Games",
+    "join": "Join Us"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "desc": "Interested in our games? Want to collaborate? We'd love to hear from you!",
+    "email": "Email"
+  },
+  "footer": {
+    "studio": "GD Studio",
+    "desc": "Creating digital adventures since 2022. An indie studio focused on innovative gameplay.",
+    "rights": "© 2023 GD Studio. All rights reserved."
+  }
+}

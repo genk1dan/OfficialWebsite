@@ -1,0 +1,43 @@
+[
+  {
+    "appId": "1737340",
+    "name": "通神榜",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1737340/header_schinese.jpg?t=1737527172",
+    "short_description": "众英雄机缘巧合下共聚桃花林，四季流转，危机暗藏。等待他们的是成功逃脱还是……《通神榜》是一款快速战斗、生存rogue游戏。你可以选择各异的角色，在海量技能中组合特色的神通、发现独特的流派构筑，不断变得更强，每一局都是新体验！",
+    "genres": [
+      "动作",
+      "冒险",
+      "休闲",
+      "独立"
+    ],
+    "recommendations": 4489,
+    "positive_percentage": "N/A",
+    "link": "https://store.steampowered.com/app/1737340/"
+  },
+  {
+    "appId": "2812610",
+    "name": "元气小剧场",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2812610/header_schinese.jpg?t=1737527098",
+    "short_description": "作为《通神榜》的开发团队，元气弹工作室带来了他们的新作《元气小剧场》。这是一款集自动战斗和牌组构建于一体的轻度策略肉鸽游戏。玩家将扮演一位主演，招募组建自己的剧组，在舞台上演绎精彩战斗，赢得台下粉丝的喝彩与打赏，直至谢幕。",
+    "genres": [
+      "策略"
+    ],
+    "recommendations": 131,
+    "positive_percentage": "N/A",
+    "link": "https://store.steampowered.com/app/2812610/"
+  },
+  {
+    "appId": "2589500",
+    "name": "呓语小镇",
+    "header_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2589500/47f512f25a69c3aec554e6a43819356cd5465585/header_schinese.jpg?t=1744782591",
+    "short_description": "《呓语小镇》是一款轻松治愈的装修收纳游戏。你将接受小镇居民的各种委托——搬家、整理、打扫卫生，在不经意间影响他们的生活轨迹，或许还会发现一些小秘密……",
+    "genres": [
+      "休闲",
+      "独立",
+      "模拟"
+    ],
+    "recommendations": 0,
+    "positive_percentage": "N/A",
+    "link": "https://store.steampowered.com/app/2589500/"
+  }
+]

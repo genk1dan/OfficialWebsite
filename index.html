@@ -472,6 +472,8 @@
                         baseDx,
                         baseDy,
                         opacity: Math.random() * 0.5 + 0.3,
+                        life: 0,
+                        maxLife: 300 + Math.random() * 300  // 生命周期为 300~600 帧
                     };
                 });
             }
@@ -489,11 +491,26 @@
                     }
 
                     // 基础亮度（闪烁）
+                    let fadeRatio = p.life / p.maxLife;
                     let brightness = p.opacity;
 
+                    // 淡入淡出：生命前20%和后20%内透明度递变
+                    if (fadeRatio < 0.2) {
+                        brightness *= fadeRatio / 0.2; // 淡入
+                    } else if (fadeRatio > 0.8) {
+                        brightness *= (1 - fadeRatio) / 0.2; // 淡出
+                    }
+
                     // 鼠标靠近时变亮
-                    if (distToMouse < 100) {
-                        brightness = Math.min(1, p.opacity + (1 - distToMouse / 100));
+                    if (distToMouse < 120) {
+                        const boost = 1 - distToMouse / 120;
+                        brightness = Math.min(1.2, p.opacity + boost * 1.5);
+
+                        // 发光圈（描边模拟光晕）
+                        ctx.shadowColor = 'rgba(59, 130, 246, 0.6)';
+                        ctx.shadowBlur = 6 * boost;
+                    } else {
+                        ctx.shadowBlur = 0;
                     }
 
                     ctx.beginPath();
@@ -503,6 +520,23 @@
 
                     p.x += p.dx;
                     p.y += p.dy;
+                    p.life++;
+                    if (p.life > p.maxLife) {
+                        const baseDx = (Math.random() - 0.5) * 0.5;
+                        const baseDy = (Math.random() - 0.5) * 0.5;
+                        Object.assign(p, {
+                            x: Math.random() * canvas.width,
+                            y: Math.random() * canvas.height,
+                            size: Math.random() * 2 + 1,
+                            dx: baseDx,
+                            dy: baseDy,
+                            baseDx,
+                            baseDy,
+                            opacity: Math.random() * 0.5 + 0.3,
+                            life: 0,
+                            maxLife: 300 + Math.random() * 200
+                        });
+                    }
                     p.x = Math.max(1, Math.min(canvas.width - 1, p.x));
                     p.y = Math.max(1, Math.min(canvas.height - 1, p.y));
                     p.dx += (p.baseDx - p.dx) * 0.05;
@@ -536,12 +570,12 @@
                         }
 
                         if (dist < maxDist) {
-                            const alpha = 1 - dist / maxDist;
                             ctx.beginPath();
                             ctx.moveTo(a.x, a.y);
                             ctx.lineTo(b.x, b.y);
-                            ctx.strokeStyle = `rgba(59, 130, 246, ${alpha * 0.5})`;
-                            ctx.lineWidth = 1;
+                            const alpha = (1 - dist / maxDist) ** 1.5;  // 曲线衰减
+                            ctx.strokeStyle = `rgba(100, 149, 237, ${alpha * 0.15})`; // 柔和的亮蓝
+                            ctx.lineWidth = 0.5 + alpha * 0.8; // 中心线略粗
                             ctx.stroke();
                         }
                     }

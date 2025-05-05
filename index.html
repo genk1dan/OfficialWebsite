@@ -114,6 +114,7 @@
 
     <!-- 初始区域 -->
     <section id="home" class="hero-gradient min-h-screen flex items-center pt-16">
+        <canvas id="bg-canvas" class="absolute top-0 left-0 w-full h-full z-0"></canvas>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div>
@@ -434,6 +435,113 @@
             }).join('');
         });
         </script>
+        
+        <script>
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = document.getElementById('home').offsetHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            let mouse = { x: null, y: null };
+
+            canvas.addEventListener('mousemove', e => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = e.clientX - rect.left;
+                mouse.y = e.clientY - rect.top;
+            });
+
+            canvas.addEventListener('mouseleave', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+
+            function createParticles(count) {
+                particles = Array.from({ length: count }, () => ({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 1,
+                    dx: (Math.random() - 0.5) * 0.5,
+                    dy: (Math.random() - 0.5) * 0.5,
+                    opacity: Math.random() * 0.5 + 0.3,
+                }));
+            }
+            
+            function drawParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (const p of particles) {
+                    // 与鼠标距离计算
+                    let distToMouse = Infinity;
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const dx = p.x - mouse.x;
+                        const dy = p.y - mouse.y;
+                        distToMouse = Math.sqrt(dx * dx + dy * dy);
+                    }
+
+                    // 基础亮度（闪烁）
+                    let brightness = p.opacity;
+
+                    // 鼠标靠近时变亮
+                    if (distToMouse < 100) {
+                        brightness = Math.min(1, p.opacity + (1 - distToMouse / 100));
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(59, 130, 246, ${brightness})`;
+                    ctx.fill();
+
+                    p.x += p.dx;
+                    p.y += p.dy;
+
+                    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+                }
+
+                // 连线逻辑（包含鼠标吸引）
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const a = particles[i];
+                        const b = particles[j];
+                        const dx = a.x - b.x;
+                        const dy = a.y - b.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        let maxDist = 120;
+
+                        // 鼠标靠近时加大连线范围
+                        if (mouse.x !== null && mouse.y !== null) {
+                            const da = Math.sqrt((a.x - mouse.x) ** 2 + (a.y - mouse.y) ** 2);
+                            const db = Math.sqrt((b.x - mouse.x) ** 2 + (b.y - mouse.y) ** 2);
+                            if (da < 100 || db < 100) {
+                                maxDist = 180;
+                            }
+                        }
+
+                        if (dist < maxDist) {
+                            const alpha = 1 - dist / maxDist;
+                            ctx.beginPath();
+                            ctx.moveTo(a.x, a.y);
+                            ctx.lineTo(b.x, b.y);
+                            ctx.strokeStyle = `rgba(59, 130, 246, ${alpha * 0.25})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                requestAnimationFrame(drawParticles);
+            }
+
+
+            
+            createParticles(80);
+            drawParticles();
+            </script>
       
 </body>
 </html>

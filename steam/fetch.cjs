@@ -2,7 +2,7 @@ const fs = require('fs');
 const axios = require('axios');
 
 
-const appIds = ['1737340', '2812610', '2589500'];
+const appIds = ['2589500','1737340','2812610'];
 
 async function fetchSteamData(appId) {
   const detailUrl = `https://store.steampowered.com/api/appdetails?appids=${appId}&l=schinese`;

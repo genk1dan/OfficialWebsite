@@ -393,11 +393,15 @@
                 const fullStarsHTML = '<i class="fas fa-star"></i>'.repeat(stars);
                 const halfStarHTML = halfStar ? '<i class="fas fa-star-half-alt"></i>' : '';
                 const emptyStarsHTML = '<i class="far fa-star"></i>'.repeat(5 - stars - halfStar);
-                const appIdOrder = ['2812610','2589500','1737340'];
                 games.forEach(game => {
                 game.appId = String(game.appId);
                 });
-                games.sort((a, b) => appIdOrder.indexOf(a.appId) - appIdOrder.indexOf(b.appId));
+                const appIdOrder = ['2812610','2589500','1737340'];
+                games.sort((a, b) => {
+                const indexA = appIdOrder.indexOf(a.appId);
+                const indexB = appIdOrder.indexOf(b.appId);
+                return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
+                });   
 
                 return `
                 <div class="game-card bg-slate-800 rounded-xl overflow-hidden shadow-lg">

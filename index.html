@@ -393,7 +393,10 @@
                 const fullStarsHTML = '<i class="fas fa-star"></i>'.repeat(stars);
                 const halfStarHTML = halfStar ? '<i class="fas fa-star-half-alt"></i>' : '';
                 const emptyStarsHTML = '<i class="far fa-star"></i>'.repeat(5 - stars - halfStar);
-                const appIdOrder = ['2812610','2589500', '1737340'];
+                const appIdOrder = ['2812610','2589500','1737340'];
+                games.forEach(game => {
+                game.appId = String(game.appId);
+                });
                 games.sort((a, b) => appIdOrder.indexOf(a.appId) - appIdOrder.indexOf(b.appId));
 
                 return `

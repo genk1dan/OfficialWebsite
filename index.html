@@ -503,11 +503,17 @@
 
                     p.x += p.dx;
                     p.y += p.dy;
+                    p.x = Math.max(1, Math.min(canvas.width - 1, p.x));
+                    p.y = Math.max(1, Math.min(canvas.height - 1, p.y));
                     p.dx += (p.baseDx - p.dx) * 0.05;
                     p.dy += (p.baseDy - p.dy) * 0.05;
 
-                    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-                    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+                    if (p.x < 0 || p.x > canvas.width) {
+                        p.dx = p.baseDx * (p.x < 0 ? 1 : -1);
+                    }
+                    if (p.y < 0 || p.y > canvas.height) {
+                        p.dy = p.baseDy * (p.y < 0 ? 1 : -1);
+                    }
                 }
 
                 // 连线逻辑（包含鼠标吸引）
@@ -518,14 +524,14 @@
                         const dx = a.x - b.x;
                         const dy = a.y - b.y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
-                        let maxDist = 120;
+                        let maxDist = 180;
 
                         // 鼠标靠近时加大连线范围
                         if (mouse.x !== null && mouse.y !== null) {
                             const da = Math.sqrt((a.x - mouse.x) ** 2 + (a.y - mouse.y) ** 2);
                             const db = Math.sqrt((b.x - mouse.x) ** 2 + (b.y - mouse.y) ** 2);
                             if (da < 100 || db < 100) {
-                                maxDist = 180;
+                                maxDist = 250;
                             }
                         }
 

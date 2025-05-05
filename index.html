@@ -71,7 +71,7 @@
                     <div class="flex-shrink-0">
                         <div class="flex items-center space-x-2">
                             <img src="assets/logo.png" alt="logo" class="h-16 w-auto">
-                            <span class="text-blue-400 text-xl font-bold">元气弹工作室</span>
+                            <span data-i18n="footer.studio" class="text-blue-400 text-xl font-bold">元气弹工作室</span>
                         </div>
                     </div>
                     <div class="hidden md:block">
@@ -94,7 +94,7 @@
                         <div class="relative">
                             <button id="lang-toggle" onclick="toggleLangMenu()"
                                 class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium glow-effect flex items-center">
-                                <span id="lang-label">中文</span>
+                                <span id="lang-label"data-i18n="misc.key0">中文</span>
                                 <i id="lang-arrow"
                                     class="fas fa-chevron-down ml-2 transition-transform duration-200"></i>
                             </button>
@@ -133,7 +133,7 @@
                 <div class="relative w-full mt-2">
                     <button id="lang-toggle-mobile" onclick="toggleLangMenu(true)"
                         class="bg-blue-600 hover:bg-blue-700 text-white w-full px-3 py-2 rounded-md text-base font-medium flex justify-between items-center">
-                        <span id="lang-label-mobile">中文</span>
+                        <span id="lang-label-mobile"data-i18n="misc.key0">中文</span>
                         <i id="lang-arrow-mobile" class="fas fa-chevron-down transition-transform duration-200"></i>
                     </button>
                     <div id="lang-menu-mobile"
@@ -682,16 +682,24 @@
             localStorage.setItem('lang', lang);
             const t = translations[lang];
 
-            // 标签文本更新
-            const updateText = (id, value) => {
-                const el = document.getElementById(id);
-                if (el) el.textContent = value;
-            };
+            // 自动批量替换所有带 data-i18n 的文本
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const keys = key.split('.');
+                let text = t;
+                for (let k of keys) {
+                    if (text[k] === undefined) {
+                        text = null;
+                        break;
+                    }
+                    text = text[k];
+                }
+                if (typeof text === 'string') {
+                    el.textContent = text;
+                }
+            });
 
-            updateText('lang-label', lang === 'zh' ? '中文' : 'EN');
-            updateText('lang-label-mobile', lang === 'zh' ? '中文' : 'EN');
-
-            // 导航栏
+            // 导航栏（非 data-i18n 写法）
             const nav = t.nav;
             document.querySelector('a[href="#home"]').textContent = nav.home;
             document.querySelector('a[href="#games"]').textContent = nav.games;
@@ -699,12 +707,11 @@
             document.querySelector('a[href="#team"]').textContent = nav.team;
             document.querySelector('a[href="#contact"]').textContent = nav.contact;
 
-            // Hero 区域
+            // Hero 区域（按钮内有 icon 所以用 innerHTML）
             document.querySelector('h1 span:nth-child(2)').textContent = t.hero.slogan;
             document.querySelector('a[href="#games"] button').innerHTML = t.hero.explore + ' <i class="fas fa-arrow-down ml-2"></i>';
             document.querySelector('a[href="#team"] button').innerHTML = t.hero.join + ' <i class="fas fa-play ml-2"></i>';
 
-            // 收起菜单
             closeLangMenus();
         }
 
@@ -736,6 +743,7 @@
             }
         });
     </script>
+
 </body>
 
 </html>

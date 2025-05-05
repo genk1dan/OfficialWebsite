@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,45 +9,46 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
-        
+
         body {
             font-family: 'Noto Sans SC', sans-serif;
             background-color: #0f172a;
             color: #e2e8f0;
         }
-        
+
         .hero-gradient {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
         }
-        
+
         .game-card {
             transition: all 0.3s ease;
             transform-style: preserve-3d;
         }
-        
+
         .game-card:hover {
             transform: translateY(-10px) scale(1.02);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
-        
+
         .glow-effect {
             animation: glow 2s infinite alternate;
         }
-        
+
         @keyframes glow {
             from {
                 box-shadow: 0 0 5px #3b82f6;
             }
+
             to {
                 box-shadow: 0 0 20px #3b82f6;
             }
         }
-        
+
         .pixel-border {
             border: 4px solid #3b82f6;
             position: relative;
         }
-        
+
         .pixel-border::before {
             content: "";
             position: absolute;
@@ -59,6 +61,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- 导航栏 -->
     <nav class="bg-slate-900/80 backdrop-blur-md fixed w-full z-50 border-b border-slate-700">
@@ -73,41 +76,74 @@
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
-                            <a href="#home" class="text-blue-400 hover:text-blue-300 px-3 py-2 rounded-md text-sm font-medium">首页</a>
-                            <a href="#games" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">游戏作品</a>
-                            <a href="#about" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">关于元气弹</a>
-                            <a href="#team" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">加入我们</a>
-                            <a href="#contact" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">联系方式</a>
+                            <a href="#home"
+                                class="text-blue-400 hover:text-blue-300 px-3 py-2 rounded-md text-sm font-medium">首页</a>
+                            <a href="#games"
+                                class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">游戏作品</a>
+                            <a href="#about"
+                                class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">关于元气弹</a>
+                            <a href="#team"
+                                class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">加入我们</a>
+                            <a href="#contact"
+                                class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium">联系方式</a>
                         </div>
                     </div>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-4 flex items-center md:ml-6">
-                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium glow-effect">
-                            中文
-                        </button>
+                        <div class="relative">
+                            <button id="lang-toggle" onclick="toggleLangMenu()"
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium glow-effect flex items-center">
+                                <span id="lang-label">中文</span>
+                                <i id="lang-arrow"
+                                    class="fas fa-chevron-down ml-2 transition-transform duration-200"></i>
+                            </button>
+                            <div id="lang-menu"
+                                class="absolute right-0 mt-2 w-28 bg-white text-black rounded shadow z-50 hidden">
+                                <div class="cursor-pointer px-4 py-2 hover:bg-blue-100" onclick="setLanguage('zh')">中文
+                                </div>
+                                <div class="cursor-pointer px-4 py-2 hover:bg-blue-100" onclick="setLanguage('en')">
+                                    English</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="-mr-2 flex md:hidden">
-                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                    <button type="button" id="mobile-menu-button"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
                         <span class="sr-only">打开菜单</span>
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </div>
         </div>
-        
+
         <!-- 移动端菜单 -->
         <div class="hidden md:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#home" class="text-blue-400 block px-3 py-2 rounded-md text-base font-medium">首页</a>
-                <a href="#games" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">游戏作品</a>
-                <a href="#about" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">关于元气弹9</a>
-                <a href="#team" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">加入我们</a>
-                <a href="#contact" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">联系方式</a>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white w-full px-3 py-2 rounded-md text-base font-medium mt-2">
-                    中文
-                </button>
+                <a href="#games"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">游戏作品</a>
+                <a href="#about"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">关于元气弹9</a>
+                <a href="#team"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">加入我们</a>
+                <a href="#contact"
+                    class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">联系方式</a>
+                <div class="relative w-full mt-2">
+                    <button id="lang-toggle-mobile" onclick="toggleLangMenu(true)"
+                        class="bg-blue-600 hover:bg-blue-700 text-white w-full px-3 py-2 rounded-md text-base font-medium flex justify-between items-center">
+                        <span id="lang-label-mobile">中文</span>
+                        <i id="lang-arrow-mobile" class="fas fa-chevron-down transition-transform duration-200"></i>
+                    </button>
+                    <div id="lang-menu-mobile"
+                        class="absolute mt-2 w-full bg-white text-black rounded shadow z-50 hidden">
+                        <div class="cursor-pointer px-4 py-2 hover:bg-blue-100" onclick="setLanguage('zh')">中文</div>
+                        <div class="cursor-pointer px-4 py-2 hover:bg-blue-100" onclick="setLanguage('en')">English
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </nav>
@@ -128,13 +164,15 @@
                     </p>
                     <div class="flex flex-wrap gap-4">
                         <a href="#games">
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105">
-                            探索我们的游戏 <i class="fas fa-arrow-down ml-2"></i>
+                            <button
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105">
+                                探索我们的游戏 <i class="fas fa-arrow-down ml-2"></i>
                             </button>
                         </a>
                         <a href="#team">
-                            <button class="border border-blue-400 text-blue-400 hover:bg-blue-400/10 px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105">
-                            加入我们 <i class="fas fa-play ml-2"></i>
+                            <button
+                                class="border border-blue-400 text-blue-400 hover:bg-blue-400/10 px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105">
+                                加入我们 <i class="fas fa-play ml-2"></i>
                             </button>
                         </a>
                     </div>
@@ -142,9 +180,11 @@
                 <div class="relative">
                     <div class="pixel-border rounded-lg overflow-hidden">
                         <video class="w-full h-auto" controls autoplay muted loop playsinline>
-                            <source src="https://video.cloudflare.steamstatic.com/store_trailers/257072713/movie_max_vp9.webm?t=1741943093" type="video/webm">
+                            <source
+                                src="https://video.cloudflare.steamstatic.com/store_trailers/257072713/movie_max_vp9.webm?t=1741943093"
+                                type="video/webm">
                             您的浏览器不支持 video 标签。
-                          </video>
+                        </video>
                     </div>
                     <div class="absolute -bottom-5 -right-5 bg-blue-600 text-white px-4 py-2 rounded-lg font-bold">
                         新作即将发布!
@@ -166,7 +206,7 @@
                 </p>
             </div>
             <div id="games-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-            
+
         </div>
     </section>
 
@@ -198,8 +238,7 @@
                 <div class="order-1 lg:order-2">
                     <div class="relative">
                         <div class="pixel-border rounded-lg overflow-hidden">
-                            <img src="assets/logo.png" 
-                                 alt="我们的工作室" class="w-full h-auto">
+                            <img src="assets/logo.png" alt="我们的工作室" class="w-full h-auto">
                         </div>
                         <div class="absolute -bottom-5 -left-5 bg-blue-600 text-white px-4 py-2 rounded-lg font-bold">
                             认识团队
@@ -226,21 +265,21 @@
                     🎯 我们正在寻找 <span class="inline-block bg-blue-600 text-white px-2 py-1 rounded-md">新媒体运营专员</span>
                 </h3>
                 <p class="mb-6 text-lg">一起来把游戏推广给更多喜欢它的人！</p>
-                
+
                 <h4 class="text-lg text-white font-semibold mb-2">工作信息</h4>
                 <ul class="list-disc list-inside mb-6 space-y-1">
                     <li>工作地点：上海静安（线下办公）</li>
                     <li>工作时间：朝九晚五｜双休｜不打卡｜不加班</li>
                     <li>岗位类型：全职 / 实习 都可</li>
                 </ul>
-            
+
                 <h4 class="text-lg text-white font-semibold mb-2">我们希望你：</h4>
                 <ul class="list-decimal list-inside mb-6 space-y-1">
                     <li>英文能力优秀：能写、能聊，能流畅处理英文文案撰写与社区互动</li>
                     <li>有视频内容能力：会剪辑、有想法，能独立完成短视频 / 宣传片的策划与剪辑</li>
                     <li>是中重度游戏玩家：能快速理解游戏机制，善于发现玩家关注点、宣传角度和内容亮点</li>
                 </ul>
-            
+
                 <h4 class="text-lg text-white font-semibold mb-2">加分项</h4>
                 <ul class="list-disc list-inside space-y-1">
                     <li>有海外生活经历</li>
@@ -254,52 +293,54 @@
     <!-- 联系我们区域 -->
     <section id="contact" class="py-20 bg-slate-800/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-center">
-            <div class="max-w-xl w-full">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 text-center">
-                <span class="text-blue-400">联系</span> 我们
-            </h2>
-            <p class="text-gray-400 mb-8 text-center">
-                对我们的游戏感兴趣？想要合作？我们很乐意听取您的意见！
-            </p>
-    
-            <div class="space-y-6">
-                <!-- 邮箱 -->
-                <div class="flex flex-col items-center text-center">
-                <div class="flex items-center space-x-4">
-                    <h3 class="text-lg font-medium text-white">电子邮件</h3>
-                </div>
-                <p class="text-blue-400 mt-2">public@gdstudio.cc</p>
-                </div>
-    
-                <!-- Bilibili -->
-                <a href="https://space.bilibili.com/399953897?spm_id_from=333.337.0.0" target="_blank" class="flex flex-col items-center text-center hover:bg-blue-600/10 rounded-lg p-2 transition">
-                <div class="flex items-center space-x-4">
-                    <div class="bg-blue-600 rounded-lg p-3">
-                    <i class="fab fa-bilibili text-white"></i>
+            <div class="flex justify-center">
+                <div class="max-w-xl w-full">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 text-center">
+                        <span class="text-blue-400">联系</span> 我们
+                    </h2>
+                    <p class="text-gray-400 mb-8 text-center">
+                        对我们的游戏感兴趣？想要合作？我们很乐意听取您的意见！
+                    </p>
+
+                    <div class="space-y-6">
+                        <!-- 邮箱 -->
+                        <div class="flex flex-col items-center text-center">
+                            <div class="flex items-center space-x-4">
+                                <h3 class="text-lg font-medium text-white">电子邮件</h3>
+                            </div>
+                            <p class="text-blue-400 mt-2">public@gdstudio.cc</p>
+                        </div>
+
+                        <!-- Bilibili -->
+                        <a href="https://space.bilibili.com/399953897?spm_id_from=333.337.0.0" target="_blank"
+                            class="flex flex-col items-center text-center hover:bg-blue-600/10 rounded-lg p-2 transition">
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-blue-600 rounded-lg p-3">
+                                    <i class="fab fa-bilibili text-white"></i>
+                                </div>
+                                <h3 class="text-lg font-medium text-white">Bilibili</h3>
+                            </div>
+                            <p class="text-blue-400 mt-2">@元气弹工作室</p>
+                        </a>
+
+                        <!-- Discord -->
+                        <a href="https://discord.com/invite/YMYeyzu5jT" target="_blank"
+                            class="flex flex-col items-center text-center hover:bg-blue-600/10 rounded-lg p-2 transition">
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-blue-600 rounded-lg p-3">
+                                    <i class="fab fa-discord text-white"></i>
+                                </div>
+                                <h3 class="text-lg font-medium text-white">Discord</h3>
+                            </div>
+                            <p class="text-blue-400 mt-2">Whisper of the house</p>
+                        </a>
                     </div>
-                    <h3 class="text-lg font-medium text-white">Bilibili</h3>
                 </div>
-                <p class="text-blue-400 mt-2">@元气弹工作室</p>
-                </a>
-    
-                <!-- Discord -->
-                <a href="https://discord.com/invite/YMYeyzu5jT" target="_blank" class="flex flex-col items-center text-center hover:bg-blue-600/10 rounded-lg p-2 transition">
-                <div class="flex items-center space-x-4">
-                    <div class="bg-blue-600 rounded-lg p-3">
-                    <i class="fab fa-discord text-white"></i>
-                    </div>
-                    <h3 class="text-lg font-medium text-white">Discord</h3>
-                </div>
-                <p class="text-blue-400 mt-2">Whisper of the house</p>
-                </a>
             </div>
-            </div>
-        </div>
         </div>
     </section>
-    
-    
+
+
     <!-- 页脚 -->
     <footer class="bg-slate-900 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -312,11 +353,14 @@
                 </div>
                 <div>
                     <h4 class="text-white font-medium mb-4">游戏作品</h4>
-                        <ul class="space-y-2">
-                            <li><a href="https://store.steampowered.com/app/2589500" target="_blank" class="text-gray-400 hover:text-blue-400 text-sm">呓语小镇</a></li>
-                            <li><a href="https://store.steampowered.com/app/1737340" target="_blank" class="text-gray-400 hover:text-blue-400 text-sm">通神榜</a></li>
-                            <li><a href="https://store.steampowered.com/app/2812610" target="_blank" class="text-gray-400 hover:text-blue-400 text-sm">元气小剧场</a></li>
-                        </ul>
+                    <ul class="space-y-2">
+                        <li><a href="https://store.steampowered.com/app/2589500" target="_blank"
+                                class="text-gray-400 hover:text-blue-400 text-sm">呓语小镇</a></li>
+                        <li><a href="https://store.steampowered.com/app/1737340" target="_blank"
+                                class="text-gray-400 hover:text-blue-400 text-sm">通神榜</a></li>
+                        <li><a href="https://store.steampowered.com/app/2812610" target="_blank"
+                                class="text-gray-400 hover:text-blue-400 text-sm">元气小剧场</a></li>
+                    </ul>
                 </div>
                 <div>
                     <h4 class="text-white font-medium mb-4">公司信息</h4>
@@ -328,13 +372,16 @@
                 <div>
                     <h4 class="text-white font-medium mb-4">关注我们</h4>
                     <div class="flex space-x-4 mb-4">
-                        <a href="https://space.bilibili.com/399953897?spm_id_from=333.337.0.0" target="_blank" class="text-gray-400 hover:text-blue-400 transition">
+                        <a href="https://space.bilibili.com/399953897?spm_id_from=333.337.0.0" target="_blank"
+                            class="text-gray-400 hover:text-blue-400 transition">
                             <i class="fab fa-bilibili"></i>
                         </a>
-                        <a href="https://discord.com/invite/YMYeyzu5jT" target="_blank" class="text-gray-400 hover:text-blue-400 transition">
+                        <a href="https://discord.com/invite/YMYeyzu5jT" target="_blank"
+                            class="text-gray-400 hover:text-blue-400 transition">
                             <i class="fab fa-discord"></i>
                         </a>
-                        <a href="https://store.steampowered.com/search/?developer=%E5%85%83%E6%B0%94%E5%BC%B9%E5%B7%A5%E4%BD%9C%E5%AE%A4%28GD%20Studio%29" target="_blank" class="text-gray-400 hover:text-blue-400 transition">
+                        <a href="https://store.steampowered.com/search/?developer=%E5%85%83%E6%B0%94%E5%BC%B9%E5%B7%A5%E4%BD%9C%E5%AE%A4%28GD%20Studio%29"
+                            target="_blank" class="text-gray-400 hover:text-blue-400 transition">
                             <i class="fab fa-steam"></i>
                         </a>
                     </div>
@@ -348,7 +395,7 @@
 
     <script>
         // 移动端菜单切换
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
@@ -357,16 +404,16 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
+
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
-                
+
                 if (targetElement) {
                     window.scrollTo({
                         top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
                     });
-                    
+
                     // 如果移动端菜单打开则关闭它
                     const mobileMenu = document.getElementById('mobile-menu');
                     if (!mobileMenu.classList.contains('hidden')) {
@@ -377,7 +424,7 @@
         });
 
         // 滚动时给导航栏添加阴影
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             const nav = document.querySelector('nav');
             if (window.scrollY > 10) {
                 nav.classList.add('shadow-lg');
@@ -386,31 +433,31 @@
             }
         });
     </script>
-      
+
     <script>
         fetch('steam/steamData.json')
-        .then(res => res.json())
-        .then(games => {
-            games.forEach(game => {
-                game.appId = String(game.appId);
+            .then(res => res.json())
+            .then(games => {
+                games.forEach(game => {
+                    game.appId = String(game.appId);
                 });
-                const appIdOrder = ['2589500','1737340','2812610'];
+                const appIdOrder = ['2589500', '1737340', '2812610'];
                 games.sort((a, b) => {
-                const indexA = appIdOrder.indexOf(a.appId);
-                const indexB = appIdOrder.indexOf(b.appId);
-                return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
-                });   
-            const container = document.getElementById('games-container');
-            container.innerHTML = games.map(game => {
-                const percent = parseFloat(game.positive_percentage) || 0;
-                const stars = Math.floor(percent / 20); // 每20%加一整颗星（最多5颗）
-                const halfStar = percent % 20 >= 10 ? 1 : 0; // 如果超过一半，则加半颗星
+                    const indexA = appIdOrder.indexOf(a.appId);
+                    const indexB = appIdOrder.indexOf(b.appId);
+                    return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
+                });
+                const container = document.getElementById('games-container');
+                container.innerHTML = games.map(game => {
+                    const percent = parseFloat(game.positive_percentage) || 0;
+                    const stars = Math.floor(percent / 20); // 每20%加一整颗星（最多5颗）
+                    const halfStar = percent % 20 >= 10 ? 1 : 0; // 如果超过一半，则加半颗星
 
-                const fullStarsHTML = '<i class="fas fa-star"></i>'.repeat(stars);
-                const halfStarHTML = halfStar ? '<i class="fas fa-star-half-alt"></i>' : '';
-                const emptyStarsHTML = '<i class="far fa-star"></i>'.repeat(5 - stars - halfStar);
+                    const fullStarsHTML = '<i class="fas fa-star"></i>'.repeat(stars);
+                    const halfStarHTML = halfStar ? '<i class="fas fa-star-half-alt"></i>' : '';
+                    const emptyStarsHTML = '<i class="far fa-star"></i>'.repeat(5 - stars - halfStar);
 
-                return `
+                    return `
                 <div class="game-card bg-slate-800 rounded-xl overflow-hidden shadow-lg">
                     <div class="relative">
                         <img src="${game.header_image}" class="w-full h-48 object-cover">
@@ -435,39 +482,100 @@
                     </div>
                 </div>
                 `;
-            }).join('');
+                }).join('');
+            });
+    </script>
+
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = document.getElementById('home').offsetHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        let mouse = { x: null, y: null };
+
+        canvas.addEventListener('mousemove', e => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
         });
-        </script>
-        
-        <script>
-            const canvas = document.getElementById('bg-canvas');
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = document.getElementById('home').offsetHeight;
-            }
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
-            let mouse = { x: null, y: null };
 
-            canvas.addEventListener('mousemove', e => {
-                const rect = canvas.getBoundingClientRect();
-                mouse.x = e.clientX - rect.left;
-                mouse.y = e.clientY - rect.top;
+        canvas.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        function createParticles(count) {
+            particles = Array.from({ length: count }, () => {
+                const baseDx = (Math.random() - 0.5) * 0.5;
+                const baseDy = (Math.random() - 0.5) * 0.5;
+                return {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 1,
+                    dx: baseDx,
+                    dy: baseDy,
+                    baseDx,
+                    baseDy,
+                    opacity: Math.random() * 0.5 + 0.3,
+                    life: 0,
+                    maxLife: 300 + Math.random() * 300  // 生命周期为 300~600 帧
+                };
             });
+        }
 
-            canvas.addEventListener('mouseleave', () => {
-                mouse.x = null;
-                mouse.y = null;
-            });
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            function createParticles(count) {
-                particles = Array.from({ length: count }, () => {
+            for (const p of particles) {
+                // 与鼠标距离计算
+                let distToMouse = Infinity;
+                if (mouse.x !== null && mouse.y !== null) {
+                    const dx = p.x - mouse.x;
+                    const dy = p.y - mouse.y;
+                    distToMouse = Math.sqrt(dx * dx + dy * dy);
+                }
+
+                // 基础亮度（闪烁）
+                let fadeRatio = p.life / p.maxLife;
+                let brightness = p.opacity;
+
+                // 淡入淡出：生命前20%和后20%内透明度递变
+                if (fadeRatio < 0.2) {
+                    brightness *= fadeRatio / 0.2; // 淡入
+                } else if (fadeRatio > 0.8) {
+                    brightness *= (1 - fadeRatio) / 0.2; // 淡出
+                }
+
+                // 鼠标靠近时变亮
+                if (distToMouse < 120) {
+                    const boost = 1 - distToMouse / 120;
+                    brightness = Math.min(1.2, p.opacity + boost * 1.5);
+
+                    // 发光圈（描边模拟光晕）
+                    ctx.shadowColor = 'rgba(59, 130, 246, 0.6)';
+                    ctx.shadowBlur = 6 * boost;
+                } else {
+                    ctx.shadowBlur = 0;
+                }
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(59, 130, 246, ${brightness})`;
+                ctx.fill();
+
+                p.x += p.dx;
+                p.y += p.dy;
+                p.life++;
+                if (p.life > p.maxLife) {
                     const baseDx = (Math.random() - 0.5) * 0.5;
                     const baseDy = (Math.random() - 0.5) * 0.5;
-                    return {
+                    Object.assign(p, {
                         x: Math.random() * canvas.width,
                         y: Math.random() * canvas.height,
                         size: Math.random() * 2 + 1,
@@ -477,141 +585,157 @@
                         baseDy,
                         opacity: Math.random() * 0.5 + 0.3,
                         life: 0,
-                        maxLife: 300 + Math.random() * 300  // 生命周期为 300~600 帧
-                    };
-                });
-            }
-            
-            function drawParticles() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                for (const p of particles) {
-                    // 与鼠标距离计算
-                    let distToMouse = Infinity;
-                    if (mouse.x !== null && mouse.y !== null) {
-                        const dx = p.x - mouse.x;
-                        const dy = p.y - mouse.y;
-                        distToMouse = Math.sqrt(dx * dx + dy * dy);
-                    }
-
-                    // 基础亮度（闪烁）
-                    let fadeRatio = p.life / p.maxLife;
-                    let brightness = p.opacity;
-
-                    // 淡入淡出：生命前20%和后20%内透明度递变
-                    if (fadeRatio < 0.2) {
-                        brightness *= fadeRatio / 0.2; // 淡入
-                    } else if (fadeRatio > 0.8) {
-                        brightness *= (1 - fadeRatio) / 0.2; // 淡出
-                    }
-
-                    // 鼠标靠近时变亮
-                    if (distToMouse < 120) {
-                        const boost = 1 - distToMouse / 120;
-                        brightness = Math.min(1.2, p.opacity + boost * 1.5);
-
-                        // 发光圈（描边模拟光晕）
-                        ctx.shadowColor = 'rgba(59, 130, 246, 0.6)';
-                        ctx.shadowBlur = 6 * boost;
-                    } else {
-                        ctx.shadowBlur = 0;
-                    }
-
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(59, 130, 246, ${brightness})`;
-                    ctx.fill();
-
-                    p.x += p.dx;
-                    p.y += p.dy;
-                    p.life++;
-                    if (p.life > p.maxLife) {
-                        const baseDx = (Math.random() - 0.5) * 0.5;
-                        const baseDy = (Math.random() - 0.5) * 0.5;
-                        Object.assign(p, {
-                            x: Math.random() * canvas.width,
-                            y: Math.random() * canvas.height,
-                            size: Math.random() * 2 + 1,
-                            dx: baseDx,
-                            dy: baseDy,
-                            baseDx,
-                            baseDy,
-                            opacity: Math.random() * 0.5 + 0.3,
-                            life: 0,
-                            maxLife: 300 + Math.random() * 200
-                        });
-                    }
-                    p.x = Math.max(1, Math.min(canvas.width - 1, p.x));
-                    p.y = Math.max(1, Math.min(canvas.height - 1, p.y));
-                    p.dx += (p.baseDx - p.dx) * 0.05;
-                    p.dy += (p.baseDy - p.dy) * 0.05;
-
-                    if (p.x < 0 || p.x > canvas.width) {
-                        p.dx = p.baseDx * (p.x < 0 ? 1 : -1);
-                    }
-                    if (p.y < 0 || p.y > canvas.height) {
-                        p.dy = p.baseDy * (p.y < 0 ? 1 : -1);
-                    }
+                        maxLife: 300 + Math.random() * 200
+                    });
                 }
+                p.x = Math.max(1, Math.min(canvas.width - 1, p.x));
+                p.y = Math.max(1, Math.min(canvas.height - 1, p.y));
+                p.dx += (p.baseDx - p.dx) * 0.05;
+                p.dy += (p.baseDy - p.dy) * 0.05;
 
-                // 连线逻辑（包含鼠标吸引）
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const a = particles[i];
-                        const b = particles[j];
-                        const dx = a.x - b.x;
-                        const dy = a.y - b.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        let maxDist = 180;
-
-                        // 鼠标靠近时加大连线范围
-                        if (mouse.x !== null && mouse.y !== null) {
-                            const da = Math.sqrt((a.x - mouse.x) ** 2 + (a.y - mouse.y) ** 2);
-                            const db = Math.sqrt((b.x - mouse.x) ** 2 + (b.y - mouse.y) ** 2);
-                            if (da < 100 || db < 100) {
-                                maxDist = 250;
-                            }
-                        }
-
-                        if (dist < maxDist) {
-                            ctx.beginPath();
-                            ctx.moveTo(a.x, a.y);
-                            ctx.lineTo(b.x, b.y);
-                            const alpha = (1 - dist / maxDist) ** 1.5;  // 曲线衰减
-                            ctx.strokeStyle = `rgba(100, 149, 237, ${alpha * 0.15})`; // 柔和的亮蓝
-                            ctx.lineWidth = 0.5 + alpha * 0.8; // 中心线略粗
-                            ctx.stroke();
-                        }
-                    }
+                if (p.x < 0 || p.x > canvas.width) {
+                    p.dx = p.baseDx * (p.x < 0 ? 1 : -1);
                 }
-
-                requestAnimationFrame(drawParticles);
+                if (p.y < 0 || p.y > canvas.height) {
+                    p.dy = p.baseDy * (p.y < 0 ? 1 : -1);
+                }
             }
-            canvas.addEventListener('click', e => {
-                const rect = canvas.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                const clickY = e.clientY - rect.top;
-                const blastRadius = 200;
-                const blastPower = 10;
 
-                for (const p of particles) {
-                    const dx = p.x - clickX;
-                    const dy = p.y - clickY;
+            // 连线逻辑（包含鼠标吸引）
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const a = particles[i];
+                    const b = particles[j];
+                    const dx = a.x - b.x;
+                    const dy = a.y - b.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
+                    let maxDist = 180;
 
-                    if (dist < blastRadius) {
-                        const angle = Math.atan2(dy, dx);
-                        const force = (1 - dist / blastRadius) * blastPower;
-                        p.dx += Math.cos(angle) * force;
-                        p.dy += Math.sin(angle) * force;
+                    // 鼠标靠近时加大连线范围
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const da = Math.sqrt((a.x - mouse.x) ** 2 + (a.y - mouse.y) ** 2);
+                        const db = Math.sqrt((b.x - mouse.x) ** 2 + (b.y - mouse.y) ** 2);
+                        if (da < 100 || db < 100) {
+                            maxDist = 250;
+                        }
+                    }
+
+                    if (dist < maxDist) {
+                        ctx.beginPath();
+                        ctx.moveTo(a.x, a.y);
+                        ctx.lineTo(b.x, b.y);
+                        const alpha = (1 - dist / maxDist) ** 1.5;  // 曲线衰减
+                        ctx.strokeStyle = `rgba(100, 149, 237, ${alpha * 0.15})`; // 柔和的亮蓝
+                        ctx.lineWidth = 0.5 + alpha * 0.8; // 中心线略粗
+                        ctx.stroke();
                     }
                 }
-            });
-            // 初始化粒子并开始绘制
+            }
 
-            createParticles(120);
-            drawParticles();
-            </script>
-      
+            requestAnimationFrame(drawParticles);
+        }
+        canvas.addEventListener('click', e => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+            const blastRadius = 200;
+            const blastPower = 10;
+
+            for (const p of particles) {
+                const dx = p.x - clickX;
+                const dy = p.y - clickY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < blastRadius) {
+                    const angle = Math.atan2(dy, dx);
+                    const force = (1 - dist / blastRadius) * blastPower;
+                    p.dx += Math.cos(angle) * force;
+                    p.dy += Math.sin(angle) * force;
+                }
+            }
+        });
+        // 初始化粒子并开始绘制
+
+        createParticles(120);
+        drawParticles();
+    </script>
+
+    <script>
+        const translations = {
+            zh: {},
+            en: {}
+        };
+
+        // 初始化语言
+        Promise.all([
+            fetch('language/zh.json').then(res => res.json()),
+            fetch('language/en.json').then(res => res.json())
+        ]).then(([zh, en]) => {
+            translations.zh = zh;
+            translations.en = en;
+
+            const userLang = localStorage.getItem('lang') || (navigator.language.includes('zh') ? 'zh' : 'en');
+            setLanguage(userLang);
+        });
+
+        function setLanguage(lang) {
+            localStorage.setItem('lang', lang);
+            const t = translations[lang];
+
+            // 标签文本更新
+            const updateText = (id, value) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
+            };
+
+            updateText('lang-label', lang === 'zh' ? '中文' : 'EN');
+            updateText('lang-label-mobile', lang === 'zh' ? '中文' : 'EN');
+
+            // 导航栏
+            const nav = t.nav;
+            document.querySelector('a[href="#home"]').textContent = nav.home;
+            document.querySelector('a[href="#games"]').textContent = nav.games;
+            document.querySelector('a[href="#about"]').textContent = nav.about;
+            document.querySelector('a[href="#team"]').textContent = nav.team;
+            document.querySelector('a[href="#contact"]').textContent = nav.contact;
+
+            // Hero 区域
+            document.querySelector('h1 span:nth-child(2)').textContent = t.hero.slogan;
+            document.querySelector('a[href="#games"] button').innerHTML = t.hero.explore + ' <i class="fas fa-arrow-down ml-2"></i>';
+            document.querySelector('a[href="#team"] button').innerHTML = t.hero.join + ' <i class="fas fa-play ml-2"></i>';
+
+            // 收起菜单
+            closeLangMenus();
+        }
+
+        function toggleLangMenu(isMobile = false) {
+            const menu = document.getElementById(isMobile ? 'lang-menu-mobile' : 'lang-menu');
+            const arrow = document.getElementById(isMobile ? 'lang-arrow-mobile' : 'lang-arrow');
+
+            const isHidden = menu.classList.contains('hidden');
+            closeLangMenus(); // 先收起全部
+            if (isHidden) {
+                menu.classList.remove('hidden');
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function closeLangMenus() {
+            document.getElementById('lang-menu')?.classList.add('hidden');
+            document.getElementById('lang-menu-mobile')?.classList.add('hidden');
+            document.getElementById('lang-arrow')?.style && (document.getElementById('lang-arrow').style.transform = 'rotate(0deg)');
+            document.getElementById('lang-arrow-mobile')?.style && (document.getElementById('lang-arrow-mobile').style.transform = 'rotate(0deg)');
+        }
+
+        // 点击空白处关闭下拉菜单
+        document.addEventListener('click', function (e) {
+            const target = e.target;
+            const isInsideLangMenu = target.closest('#lang-toggle, #lang-menu, #lang-toggle-mobile, #lang-menu-mobile');
+            if (!isInsideLangMenu) {
+                closeLangMenus();
+            }
+        });
+    </script>
 </body>
+
 </html>

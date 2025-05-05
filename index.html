@@ -169,13 +169,13 @@
                     <div class="flex flex-wrap gap-4">
                         <a href="#games">
                             <button
-                                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105">
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105"data-i18n-html="hero.explore">
                                 探索我们的游戏 <i class="fas fa-arrow-down ml-2"></i>
                             </button>
                         </a>
                         <a href="#team">
                             <button
-                                class="border border-blue-400 text-blue-400 hover:bg-blue-400/10 px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105">
+                                class="border border-blue-400 text-blue-400 hover:bg-blue-400/10 px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105"data-i18n-html="hero.join">
                                 加入我们 <i class="fas fa-play ml-2"></i>
                             </button>
                         </a>
@@ -203,7 +203,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-                    <span class="text-blue-400" data-i18n="misc.key5">我们的</span> 游戏作品
+                    <span class="text-blue-400" data-i18n="misc.key5">我们的</span> <span data-i18n="nav.games">游戏作品</span>
                 </h2>
                 <p class="text-lg text-gray-400 max-w-3xl mx-auto" data-i18n="misc.key6">
                     每一款游戏都是我们心血的结晶，融合了创新玩法。
@@ -218,7 +218,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="order-2 lg:order-1">
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
-                        <span class="text-blue-400" data-i18n="misc.key7">关于</span> 元气弹工作室
+                        <span class="text-blue-400" data-i18n="misc.key7">关于</span><span data-i18n="footer.studio">元气弹工作室</span> 
                     </h2>
                     <p class="text-gray-400 mb-6" data-i18n="misc.key8">
                         元气弹工作室成立于2022年，由一群热爱游戏的开发者组成。最初我们只是一个小型独立团队，致力于打造令人难忘的游戏体验。
@@ -256,7 +256,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-                    <span class="text-blue-400" data-i18n="misc.key14">加入</span> 我们的团队
+                    <span class="text-blue-400" data-i18n="misc.key14">加入</span> <span data-i18n="misc.key15">我们的团队</span>
                 </h2>
                 <p class="text-lg text-gray-400 max-w-3xl mx-auto" data-i18n="misc.key16">
                     我们一直在寻找充满热情的人才加入我们的团队。
@@ -264,7 +264,7 @@
             </div>
             <div class="max-w-3xl mx-auto bg-slate-800 rounded-xl p-8 text-left text-gray-300">
                 <h3 class="text-2xl text-blue-400 font-extrabold mb-4">
-                    🎯 我们正在寻找 <span class="inline-block bg-blue-600 text-white px-2 py-1 rounded-md"
+                    <span data-i18n="misc.key17">🎯 我们正在寻找</span> <span class="inline-block bg-blue-600 text-white px-2 py-1 rounded-md"
                         data-i18n="misc.key18">新媒体运营专员</span>
                 </h3>
                 <p class="mb-6 text-lg" data-i18n="misc.key19">一起来把游戏推广给更多喜欢它的人！</p>
@@ -295,7 +295,7 @@
             <div class="flex justify-center">
                 <div class="max-w-xl w-full">
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 text-center">
-                        <span class="text-blue-400" data-i18n="misc.key32">联系</span> 我们
+                        <span class="text-blue-400" data-i18n="misc.key32">联系</span> <span data-i18n="misc.key33">我们</span> 
                     </h2>
                     <p class="text-gray-400 mb-8 text-center" data-i18n="contact.desc">
                         对我们的游戏感兴趣？想要合作？我们很乐意听取您的意见！
@@ -692,6 +692,23 @@
                 }
             });
 
+            // 替换 innerHTML（保留图标）
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const key = el.getAttribute('data-i18n-html');
+                const keys = key.split('.');
+                let text = t;
+                for (let k of keys) {
+                    if (text[k] === undefined) {
+                        text = null;
+                        break;
+                    }
+                    text = text[k];
+                }
+                if (typeof text === 'string') {
+                    const icon = el.querySelector('i');
+                    el.innerHTML = text + (icon ? ` ${icon.outerHTML}` : '');
+                }
+            });
             // 导航栏（非 data-i18n 写法）
             const nav = t.nav;
             document.querySelector('a[href="#home"]').textContent = nav.home;

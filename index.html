@@ -333,7 +333,6 @@
                     <div class="flex space-x-4 mb-4">
                         <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-bilibili"></i></a>
                         <a href="#" class="text-gray-400 hover:text-blue-400"><i class="fab fa-steam"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-blue-400"><i class="iconfont icon-xiaohongshu"></i></a>
                     </div>
                     <div class="text-gray-500 text-xs">
                         © 2023 元气弹工作室。保留所有权利。
@@ -461,14 +460,20 @@
             });
 
             function createParticles(count) {
-                particles = Array.from({ length: count }, () => ({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    size: Math.random() * 2 + 1,
-                    dx: (Math.random() - 0.5) * 0.5,
-                    dy: (Math.random() - 0.5) * 0.5,
-                    opacity: Math.random() * 0.5 + 0.3,
-                }));
+                particles = Array.from({ length: count }, () => {
+                    const baseDx = (Math.random() - 0.5) * 0.5;
+                    const baseDy = (Math.random() - 0.5) * 0.5;
+                    return {
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        size: Math.random() * 2 + 1,
+                        dx: baseDx,
+                        dy: baseDy,
+                        baseDx,
+                        baseDy,
+                        opacity: Math.random() * 0.5 + 0.3,
+                    };
+                });
             }
             
             function drawParticles() {
@@ -498,6 +503,8 @@
 
                     p.x += p.dx;
                     p.y += p.dy;
+                    p.dx += (p.baseDx - p.dx) * 0.05;
+                    p.dy += (p.baseDy - p.dy) * 0.05;
 
                     if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
                     if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
@@ -527,7 +534,7 @@
                             ctx.beginPath();
                             ctx.moveTo(a.x, a.y);
                             ctx.lineTo(b.x, b.y);
-                            ctx.strokeStyle = `rgba(59, 130, 246, ${alpha * 0.25})`;
+                            ctx.strokeStyle = `rgba(59, 130, 246, ${alpha * 0.5})`;
                             ctx.lineWidth = 1;
                             ctx.stroke();
                         }
@@ -536,10 +543,29 @@
 
                 requestAnimationFrame(drawParticles);
             }
+            canvas.addEventListener('click', e => {
+                const rect = canvas.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const clickY = e.clientY - rect.top;
+                const blastRadius = 200;
+                const blastPower = 10;
 
+                for (const p of particles) {
+                    const dx = p.x - clickX;
+                    const dy = p.y - clickY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
 
-            
-            createParticles(80);
+                    if (dist < blastRadius) {
+                        const angle = Math.atan2(dy, dx);
+                        const force = (1 - dist / blastRadius) * blastPower;
+                        p.dx += Math.cos(angle) * force;
+                        p.dy += Math.sin(angle) * force;
+                    }
+                }
+            });
+            // 初始化粒子并开始绘制
+
+            createParticles(120);
             drawParticles();
             </script>
       

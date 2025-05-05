@@ -11,7 +11,7 @@
       "独立"
     ],
     "recommendations": 4489,
-    "positive_percentage": "N/A",
+    "positive_percentage": 90,
     "link": "https://store.steampowered.com/app/1737340/"
   },
   {
@@ -23,7 +23,7 @@
       "策略"
     ],
     "recommendations": 131,
-    "positive_percentage": "N/A",
+    "positive_percentage": 88,
     "link": "https://store.steampowered.com/app/2812610/"
   },
   {
@@ -37,7 +37,7 @@
       "模拟"
     ],
     "recommendations": 0,
-    "positive_percentage": "N/A",
+    "positive_percentage": null,
     "link": "https://store.steampowered.com/app/2589500/"
   }
 ]

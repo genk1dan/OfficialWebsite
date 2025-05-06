@@ -34,7 +34,7 @@ async function fetchGameData(appId) {
             en: enData.genres.map(g => g.description)
         },
         header_image: cnData.header_image,
-        recommendations: gameData.recommendations?.total ?? 0,
+        recommendations: cnData.recommendations?.total ?? 0,
         positive_percentage: percentage,  // ✅ 用真实用户评价计算
         link: `https://store.steampowered.com/app/${appId}/`
     };

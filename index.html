@@ -784,14 +784,18 @@
                                 ${game.genres[lang].map(tag => `<span class="bg-blue-900/50 text-blue-300 text-xs px-2 py-1 rounded">${tag}</span>`).join('')}
                             </div>
                             <div class="flex justify-between items-center">
+                                ${game.positive_percentage ? `
                                 <div class="text-yellow-400">
                                     ${fullStarsHTML}${halfStarHTML}${emptyStarsHTML}
                                     <span class="text-gray-400 ml-1 text-sm">
-                                        ${game.positive_percentage ? 
-                                            (lang === 'zh' ? `（好评率 ${game.positive_percentage}%）` : `(Rating ${game.positive_percentage}%)`) : 
-                                            (lang === 'zh' ? '（即将发售）' : '(Coming Soon)')}
+                                    ${lang === 'zh' ? `（好评率 ${game.positive_percentage}%）` : `(Rating ${game.positive_percentage}%)`}
                                     </span>
                                 </div>
+                                ` : `
+                                <div class="text-yellow-400 text-sm">
+                                    ${lang === 'zh' ? '（即将发售）' : '(Coming Soon)'}
+                                </div>
+                                `}
                                 <a href="${game.link}" target="_blank" class="text-blue-400 hover:text-blue-300 text-sm font-medium">
                                     ${lang === 'zh' ? 'Steam链接' : 'Steam Link'} <i class="fas fa-chevron-right ml-1"></i>
                                 </a>

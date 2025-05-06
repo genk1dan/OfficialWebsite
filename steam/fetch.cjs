@@ -1,7 +1,6 @@
 const fs = require('fs');
 const axios = require('axios');
 
-
 const appIds = ['2589500', '1737340', '2812610'];
 
 async function fetchGameData(appId) {
@@ -15,12 +14,19 @@ async function fetchGameData(appId) {
 
     return {
         appId: appId,
-        name: cnData.name,
-        name_en: enData.name,
+        name: {
+            zh: cnData.name,
+            en: enData.name
+        },
+        short_description: {
+            zh: cnData.short_description,
+            en: enData.short_description
+        },
+        genres: {
+            zh: cnData.genres.map(g => g.description),
+            en: enData.genres.map(g => g.description)
+        },
         header_image: cnData.header_image,
-        short_description: cnData.short_description,
-        short_description_en: enData.short_description,
-        genres: cnData.genres.map(g => g.description),
         recommendations: cnData.recommendations?.total || 0,
         positive_percentage: cnData.positive || null,
         link: `https://store.steampowered.com/app/${appId}/`
@@ -29,13 +35,14 @@ async function fetchGameData(appId) {
 
 (async () => {
     const results = [];
-    for (const appId of appIds) {
+    for (const id of appIds) {
         try {
-            const game = await fetchGameData(appId);
-            results.push(game);
-        } catch (err) {
-            console.error(`Failed to fetch data for app ${appId}:`, err.message);
+            const data = await fetchGameData(id);
+            results.push(data);
+        } catch (e) {
+            console.error(`Failed to fetch for app ${id}:`, e.message);
         }
     }
-    fs.writeFileSync('./steamData.json', JSON.stringify(results, null, 2));
+
+    fs.writeFileSync('./steamData.json', JSON.stringify(results, null, 2), 'utf-8');
 })();

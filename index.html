@@ -433,6 +433,7 @@
         fetch('steam/steamData.json')
             .then(res => res.json())
             .then(games => {
+                const isZh = localStorage.getItem('lang') === 'zh';
                 games.forEach(game => {
                     game.appId = String(game.appId);
                 });
@@ -458,8 +459,8 @@
                         <img src="${game.header_image}" class="w-full h-48 object-cover">
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">${game.name}</h3>
-                        <p class="text-gray-400 text-sm mb-4">${game.short_description}</p>
+                        <h3 class="text-xl font-bold text-white mb-2">${isZh ? game.name : game.name_en}</h3>
+                        <p class="text-gray-400 text-sm mb-4">${isZh ? game.short_description : game.short_description_en}</p>
                         <div class="flex flex-wrap gap-2 mb-4">
                             ${game.genres.map(tag => `<span class="bg-blue-900/50 text-blue-300 text-xs px-2 py-1 rounded">${tag}</span>`).join('')}
                         </div>

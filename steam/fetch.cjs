@@ -6,16 +6,18 @@ const appIds = ['2589500', '1737340', '2812610'];
 async function fetchGameData(appId) {
     const cnUrl = `https://store.steampowered.com/api/appdetails?appids=${appId}&cc=cn&l=schinese`;
     const enUrl = `https://store.steampowered.com/api/appdetails?appids=${appId}&cc=us&l=english`;
+    const reviewUrl = `https://store.steampowered.com/appreviews/${appId}?json=1&language=all&purchase_type=all`;
 
 
 
-    const [cnRes, enRes] = await Promise.all([axios.get(cnUrl), axios.get(enUrl)]);
+    const [cnRes, enRes,reviewRes] = await Promise.all([axios.get(cnUrl), axios.get(enUrl),axios.get(reviewUrl)]);
 
     const cnData = cnRes.data[appId].data;
     const enData = enRes.data[appId].data;
-    const recommendations = cnData.recommendations?.total || 0;
-    const positive = cnData.recommendations?.total_positive || 0;
-    const percentage = recommendations > 0 ? Math.round((positive / recommendations) * 100) : null;
+    const reviewData = reviewRes.data;
+    const total = reviewData.query_summary?.total_reviews ?? 0;
+    const positive = reviewData.query_summary?.total_positive ?? 0;
+    const percentage = total > 0 ? Math.round((positive / total) * 100) : null;
 
     return {
         appId: appId,
@@ -32,8 +34,8 @@ async function fetchGameData(appId) {
             en: enData.genres.map(g => g.description)
         },
         header_image: cnData.header_image,
-        recommendations: recommendations,
-        positive_percentage: percentage,
+        recommendations: gameData.recommendations?.total ?? 0,
+        positive_percentage: percentage,  // ✅ 用真实用户评价计算
         link: `https://store.steampowered.com/app/${appId}/`
     };
 }

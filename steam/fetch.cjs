@@ -7,10 +7,15 @@ async function fetchGameData(appId) {
     const cnUrl = `https://store.steampowered.com/api/appdetails?appids=${appId}&cc=cn&l=schinese`;
     const enUrl = `https://store.steampowered.com/api/appdetails?appids=${appId}&cc=us&l=english`;
 
+
+
     const [cnRes, enRes] = await Promise.all([axios.get(cnUrl), axios.get(enUrl)]);
 
     const cnData = cnRes.data[appId].data;
     const enData = enRes.data[appId].data;
+    const recommendations = cnData.recommendations?.total || 0;
+    const positive = cnData.recommendations?.total_positive || 0;
+    const percentage = recommendations > 0 ? Math.round((positive / recommendations) * 100) : null;
 
     return {
         appId: appId,
@@ -27,8 +32,8 @@ async function fetchGameData(appId) {
             en: enData.genres.map(g => g.description)
         },
         header_image: cnData.header_image,
-        recommendations: cnData.recommendations?.total || 0,
-        positive_percentage: cnData.positive || null,
+        recommendations: recommendations,
+        positive_percentage: percentage,
         link: `https://store.steampowered.com/app/${appId}/`
     };
 }

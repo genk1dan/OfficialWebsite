@@ -7,18 +7,19 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>元气弹工作室 | 独立游戏开发团队</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/colors.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
 
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background-color: #0f172a;
-            color: #e2e8f0;
+            background-color: var(--color-bg);
+            color: var(--color-text);
         }
 
         .hero-gradient {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            background: linear-gradient(135deg, var(--color-blue-dark) 0%, var(--color-bg) 100%);
         }
 
         .game-card {
@@ -37,16 +38,16 @@
 
         @keyframes glow {
             from {
-                box-shadow: 0 0 5px #3b82f6;
+                box-shadow: 0 0 5px var(--color-bg);
             }
 
             to {
-                box-shadow: 0 0 20px #3b82f6;
+                box-shadow: 0 0 20px var(--color-bg);
             }
         }
 
         .pixel-border {
-            border: 4px solid #3b82f6;
+            border: 4px solid var(--color-card);
             position: relative;
         }
 
@@ -57,7 +58,7 @@
             left: -8px;
             right: -8px;
             bottom: -8px;
-            border: 4px solid #3b82f6;
+            border: 4px solid var(--color-blue);
             z-index: -1;
         }
     </style>
@@ -65,19 +66,19 @@
 
 <body>
     <!-- 导航栏 -->
-    <nav class="bg-slate-900/80 backdrop-blur-md fixed w-full z-50 border-b border-slate-700">
+    <nav class=" backdrop-blur-md fixed w-full z-50 border-b border-slate-700" style="background-color:var(--color-bg-highlight)">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
                         <div class="flex items-center space-x-2">
                             <img alt="logo" class="h-16 w-auto" src="assets/logo.png" />
-                            <span class="text-blue-400 text-xl font-bold" data-i18n="hero.studio">元气弹工作室</span>
+                            <span class="text-white text-xl font-bold" data-i18n="hero.studio">元气弹工作室</span>
                         </div>
                     </div>
                     <div class="hidden md:block">
                         <div class="ml-10 flex items-baseline space-x-4">
-                            <a class="text-blue-400 hover:text-blue-300 px-3 py-2 rounded-md text-sm font-medium"
+                            <a class="text-gray-300 hover:text-blue-300 px-3 py-2 rounded-md text-sm font-medium"
                                 data-i18n="nav.home" href="#home">首页</a>
                             <a class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                                 data-i18n="nav.games" href="#games">游戏作品</a>
@@ -94,18 +95,20 @@
                     <div class="ml-4 flex items-center md:ml-6">
                         <div class="relative">
                             <button
-                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium glow-effect flex items-center"
-                                id="lang-toggle" onclick="toggleLangMenu()">
+                                class=" hover:bg-black-700 text-black px-4 py-2 rounded-md text-sm font-medium glow-effect flex items-center"
+                                style="background-color:var(--color-bg)" id="lang-toggle" onclick="toggleLangMenu()">
                                 <span data-i18n="misc.key0" id="lang-label">中文</span>
                                 <i class="fas fa-chevron-down ml-2 transition-transform duration-200"
                                     id="lang-arrow"></i>
                             </button>
-                            <div class="absolute right-0 mt-2 w-28 bg-white text-black rounded shadow z-50 hidden"
+                            <div class="absolute right--5 mt-2 w-50 rounded-md shadow z-50 hidden"
+                                style="background-color: var(--color-blue); color:var(--color-card)"
                                 id="lang-menu">
-                                <div class="cursor-pointer px-4 py-2 hover:bg-blue-100"
+                                <div class="cursor-pointer px-4 py-2 hover:" style="background-color:var(--color-bg)"
                                     onclick="setLanguage('zh')">中文
                                 </div>
-                                <div class="cursor-pointer px-4 py-2 hover:bg-blue-100" onclick="setLanguage('en')">
+                                <div class="cursor-pointer px-4 py-2 hover:" style="background-color:var(--color-bg)"
+                                    onclick="setLanguage('en')">
                                     English</div>
                             </div>
                         </div>
@@ -113,8 +116,8 @@
                 </div>
                 <div class="-mr-2 flex md:hidden">
                     <button
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"
-                        id="mobile-menu-button" type="button">
+                        class="inline-flex items-center justify-center p-2 rounded-md text-black-400 hover:text-white hover: focus:outline-none"
+                        style="background-color:var(--color-blue)" id="mobile-menu-button" type="button">
                         <span class="sr-only" data-i18n="misc.key1">打开菜单</span>
                         <i class="fas fa-bars"></i>
                     </button>
@@ -124,7 +127,7 @@
         <!-- 移动端菜单 -->
         <div class="hidden md:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a class="text-blue-400 block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav.home"
+                <a class="text-gray-300 block px-3 py-2 rounded-md text-base font-medium" data-i18n="nav.home"
                     href="#home">首页</a>
                 <a class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                     data-i18n="nav.games" href="#games">游戏作品</a>
@@ -136,16 +139,17 @@
                     data-i18n="nav.contact" href="#contact">联系方式</a>
                 <div class="relative w-full mt-2">
                     <button
-                        class="bg-blue-600 hover:bg-blue-700 text-white w-full px-3 py-2 rounded-md text-base font-medium flex justify-between items-center"
-                        id="lang-toggle-mobile" onclick="toggleLangMenu(true)">
+                        class=" hover:bg-white text-black w-full px-3 py-2 rounded-md text-base font-medium flex justify-between items-center"
+                        style="background-color:var(--color-bg)" id="lang-toggle-mobile" onclick="toggleLangMenu(true)">
                         <span data-i18n="misc.key0" id="lang-label-mobile">中文</span>
                         <i class="fas fa-chevron-down transition-transform duration-200" id="lang-arrow-mobile"></i>
                     </button>
                     <div class="absolute mt-2 w-full bg-white text-black rounded shadow z-50 hidden"
                         id="lang-menu-mobile">
-                        <div class="cursor-pointer px-4 py-2 hover:bg-blue-100" 
+                        <div class="cursor-pointer px-4 py-2 hover:" style="background-color:var(--color-bg)"
                             onclick="setLanguage('zh')">中文</div>
-                        <div class="cursor-pointer px-4 py-2 hover:bg-blue-100" onclick="setLanguage('en')">English
+                        <div class="cursor-pointer px-4 py-2 hover:" style="background-color:var(--color-bg)"
+                            onclick="setLanguage('en')">English
                         </div>
                     </div>
                 </div>
@@ -153,29 +157,31 @@
         </div>
     </nav>
     <!-- 初始区域 -->
-    <section class="hero-gradient min-h-screen flex items-center pt-16" id="home">
+    <section class="min-h-screen flex items-center pt-16" id="home" style="background-color:var(--color-bg-secondary)">
         <canvas class="absolute top-0 left-0 w-full h-full z-0" id="bg-canvas"></canvas>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
-                        <span class="text-blue-400" data-i18n="hero.studio">元气弹工作室</span> <br />
+                    <h1 class="text-4xl md:text-6xl font-bold text-black-300 mb-6">
+                        <span class="text-black" data-i18n="hero.studio">元气弹工作室</span> <br />
                         <span class="text-3xl md:text-4xl" data-i18n="hero.slogan">创造令人难忘的游戏体验</span>
                     </h1>
-                    <p class="text-lg text-gray-300 mb-8" data-i18n="misc.key3">
+                    <p class="text-lg text-black-300 mb-8" data-i18n="misc.key3">
                         我们是一支充满激情的独立游戏开发团队，致力于打造独特而富有创意的游戏作品。
                         通过精心设计的游戏机制和引人入胜的故事，我们希望为玩家带来全新的游戏体验。
                     </p>
                     <div class="flex flex-wrap gap-4">
                         <a href="#games">
                             <button
-                                class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105"data-i18n-html="hero.explore">
+                                class=" hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105"
+                                style="background-color:var(--color-card)" data-i18n-html="hero.explore">
                                 探索我们的游戏 <i class="fas fa-arrow-down ml-2"></i>
                             </button>
                         </a>
                         <a href="#team">
                             <button
-                                class="border border-blue-400 text-blue-400 hover:bg-blue-400/10 px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105"data-i18n-html="hero.join">
+                                class="border border-black text-white-400 hover: px-6 py-3 rounded-lg font-medium transition-all transform hover:scale-105"
+                                style="background-color:var(--color-bg)" data-i18n-html="hero.join">
                                 加入我们 <i class="fas fa-play ml-2"></i>
                             </button>
                         </a>
@@ -190,8 +196,8 @@
                             您的浏览器不支持 video 标签。
                         </video>
                     </div>
-                    <div class="absolute -bottom-5 -right-5 bg-blue-600 text-white px-4 py-2 rounded-lg font-bold"
-                        data-i18n="misc.key4">
+                    <div class="absolute -bottom-5 -right-5  text-white px-4 py-2 rounded-lg font-bold"
+                        style="background-color:var(--color-card)" data-i18n="misc.key4">
                         新作即将发布!
                     </div>
                 </div>
@@ -199,13 +205,14 @@
         </div>
     </section>
     <!-- 游戏作品区域 -->
-    <section class="py-20 bg-slate-900" id="games">
+    <section class="py-20 " style="background-color:var(--color-bg)" id="games"
+        style="background-color: var(--color-bg)">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-                    <span class="text-blue-400" data-i18n="misc.key5">我们的</span> <span data-i18n="nav.games">游戏作品</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-black mb-4">
+                    <span class="text-black" data-i18n="misc.key5">我们的</span> <span data-i18n="nav.games">游戏作品</span>
                 </h2>
-                <p class="text-lg text-gray-400 max-w-3xl mx-auto" data-i18n="misc.key6">
+                <p class="text-lg text-black-400 max-w-3xl mx-auto" data-i18n="misc.key6">
                     每一款游戏都是我们心血的结晶，融合了创新玩法。
                 </p>
             </div>
@@ -213,26 +220,28 @@
         </div>
     </section>
     <!-- 关于我们区域 -->
-    <section class="py-20 bg-slate-800/50" id="about">
+    <section class="py-20 " style="background-color:var(--color-bg-secondary)" id="about"
+        style="background-color: var(--color-bg-secondary)">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class="order-2 lg:order-1">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
-                        <span class="text-blue-400" data-i18n="misc.key7">关于</span><span data-i18n="footer.studio">元气弹工作室</span> 
+                    <h2 class="text-3xl md:text-4xl font-bold text-black mb-6">
+                        <span class="text-gray" data-i18n="misc.key7">关于</span><span
+                            data-i18n="footer.studio">元气弹工作室</span>
                     </h2>
-                    <p class="text-gray-400 mb-6" data-i18n="misc.key8">
+                    <p class="text-black-400 mb-6" data-i18n="misc.key8">
                         元气弹工作室成立于2022年，由一群热爱游戏的开发者组成。最初我们只是一个小型独立团队，致力于打造令人难忘的游戏体验。
                     </p>
-                    <p class="text-gray-400 mb-8" data-i18n="misc.key9">
+                    <p class="text-black-400 mb-8" data-i18n="misc.key9">
                         我们相信游戏具有讲述故事、连接人与人以及突破互动娱乐边界的独特力量。每一个项目都是我们创新和激发灵感的契机。
                     </p>
                     <div class="grid grid-cols-2 gap-4 mb-8">
-                        <div class="bg-slate-800 p-4 rounded-lg">
-                            <div class="text-blue-400 text-3xl font-bold mb-2">3</div>
+                        <div class=" p-4 rounded-lg" style="background-color:var(  --color-card)">
+                            <div class="text-white text-3xl font-bold mb-2">3</div>
                             <div class="text-gray-300 text-sm" data-i18n="misc.key10">已发布游戏</div>
                         </div>
-                        <div class="bg-slate-800 p-4 rounded-lg">
-                            <div class="text-blue-400 text-3xl font-bold mb-2" data-i18n="misc.key11">20万+</div>
+                        <div class=" p-4 rounded-lg" style="background-color:var(  --color-card)">
+                            <div class="text-white text-3xl font-bold mb-2" data-i18n="misc.key11">20万+</div>
                             <div class="text-gray-300 text-sm" data-i18n="misc.key12">全球玩家</div>
                         </div>
                     </div>
@@ -240,10 +249,10 @@
                 <div class="order-1 lg:order-2">
                     <div class="relative">
                         <div class="pixel-border rounded-lg overflow-hidden">
-                            <img alt="我们的工作室" class="w-full h-auto" src="assets/logo.png" />
+                            <img alt="我们的工作室" class="w-full h-auto" src="assets/logo_b.png" />
                         </div>
-                        <div class="absolute -bottom-5 -left-5 bg-blue-600 text-white px-4 py-2 rounded-lg font-bold"
-                            data-i18n="misc.key13">
+                        <div class="absolute -bottom-5 -left-5  text-white px-4 py-2 rounded-lg font-bold"
+                            style="background-color:var(--color-card)" data-i18n="misc.key13">
                             认识团队
                         </div>
                     </div>
@@ -252,35 +261,39 @@
         </div>
     </section>
     <!-- 团队成员区域 -->
-    <section class="py-20 bg-slate-900" id="team">
+    <section class="py-20 " style="background-color:var(--color-bg)" id="team"
+        style="background-color: var(--color-bg-highlight)">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-                    <span class="text-blue-400" data-i18n="misc.key14">加入</span> <span data-i18n="misc.key15">我们的团队</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-black mb-4">
+                    <span class="text-black" data-i18n="misc.key14">加入</span> <span
+                        data-i18n="misc.key15">我们的团队</span>
                 </h2>
-                <p class="text-lg text-gray-400 max-w-3xl mx-auto" data-i18n="misc.key16">
+                <p class="text-lg text-black-400 max-w-3xl mx-auto" data-i18n="misc.key16">
                     我们一直在寻找充满热情的人才加入我们的团队。
                 </p>
             </div>
-            <div class="max-w-3xl mx-auto bg-slate-800 rounded-xl p-8 text-left text-gray-300">
-                <h3 class="text-2xl text-blue-400 font-extrabold mb-4">
-                    <span data-i18n="misc.key17">🎯 我们正在寻找</span> <span class="inline-block bg-blue-600 text-white px-2 py-1 rounded-md"
+            <div class="max-w-3xl mx-auto  rounded-xl p-8 text-left text-black-300"
+                style="background-color:var(--color-bg)">
+                <h3 class="text-2xl text-black font-extrabold mb-4">
+                    <span data-i18n="misc.key17">🎯 我们正在寻找</span> <span
+                        class="inline-block  text-black px-2 py-1 rounded-md" style="background-color:var(--color-bg)"
                         data-i18n="misc.key18">新媒体运营专员</span>
                 </h3>
                 <p class="mb-6 text-lg" data-i18n="misc.key19">一起来把游戏推广给更多喜欢它的人！</p>
-                <h4 class="text-lg text-white font-semibold mb-2" data-i18n="misc.key20">工作信息</h4>
+                <h4 class="text-lg text-black font-semibold mb-2" data-i18n="misc.key20">工作信息</h4>
                 <ul class="list-disc list-inside mb-6 space-y-1">
                     <li data-i18n="misc.key21">工作地点：上海静安（线下办公）</li>
                     <li data-i18n="misc.key22">工作时间：朝九晚五｜双休｜不打卡｜不加班</li>
                     <li data-i18n="misc.key23">岗位类型：全职 / 实习 都可</li>
                 </ul>
-                <h4 class="text-lg text-white font-semibold mb-2" data-i18n="misc.key24">我们希望你：</h4>
+                <h4 class="text-lg text-black font-semibold mb-2" data-i18n="misc.key24">我们希望你：</h4>
                 <ul class="list-decimal list-inside mb-6 space-y-1">
                     <li data-i18n="misc.key25">英文能力优秀：能写、能聊，能流畅处理英文文案撰写与社区互动</li>
                     <li data-i18n="misc.key26">有视频内容能力：会剪辑、有想法，能独立完成短视频 / 宣传片的策划与剪辑</li>
                     <li data-i18n="misc.key27">是中重度游戏玩家：能快速理解游戏机制，善于发现玩家关注点、宣传角度和内容亮点</li>
                 </ul>
-                <h4 class="text-lg text-white font-semibold mb-2" data-i18n="misc.key28">加分项</h4>
+                <h4 class="text-lg text-black font-semibold mb-2" data-i18n="misc.key28">加分项</h4>
                 <ul class="list-disc list-inside space-y-1">
                     <li data-i18n="misc.key29">有海外生活经历</li>
                     <li data-i18n="misc.key30">熟悉 Discord、TikTok、Twitch 等平台玩法</li>
@@ -290,45 +303,49 @@
         </div>
     </section>
     <!-- 联系我们区域 -->
-    <section class="py-20 bg-slate-800/50" id="contact">
+    <section class="py-20 " style="background-color:var(--color-bg-secondary)" id="contact"
+        style="background-color: var(--color-bg-secondary)">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-center">
                 <div class="max-w-xl w-full">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 text-center">
-                        <span class="text-blue-400" data-i18n="misc.key32">联系</span> <span data-i18n="misc.key33">我们</span> 
+                    <h2 class="text-3xl md:text-4xl font-bold text-black mb-6 text-center">
+                        <span class="text-black" data-i18n="misc.key32">联系</span> <span
+                            data-i18n="misc.key33">我们</span>
                     </h2>
-                    <p class="text-gray-400 mb-8 text-center" data-i18n="contact.desc">
+                    <p class="text-black-400 mb-8 text-center" data-i18n="contact.desc">
                         对我们的游戏感兴趣？想要合作？我们很乐意听取您的意见！
                     </p>
                     <div class="space-y-6">
                         <!-- 邮箱 -->
                         <div class="flex flex-col items-center text-center">
                             <div class="flex items-center space-x-4">
-                                <h3 class="text-lg font-medium text-white" data-i18n="contact.email">电子邮件</h3>
+                                <h3 class="text-lg font-medium text-black" data-i18n="contact.email">电子邮件</h3>
                             </div>
-                            <p class="text-blue-400 mt-2">public@gdstudio.cc</p>
+                            <p class="text-black mt-2">public@gdstudio.cc</p>
                         </div>
                         <!-- Bilibili -->
-                        <a class="flex flex-col items-center text-center hover:bg-blue-600/10 rounded-lg p-2 transition"
+                        <a class="flex flex-col items-center text-center hover: rounded-lg p-2 transition"
+                            style="background-color:var(--color-card)"
                             href="https://space.bilibili.com/399953897?spm_id_from=333.337.0.0" target="_blank">
                             <div class="flex items-center space-x-4">
-                                <div class="bg-blue-600 rounded-lg p-3">
-                                    <i class="fab fa-bilibili text-white"></i>
+                                <div class=" rounded-lg p-3" style="background-color:var(--color-bg)">
+                                    <i class="fab fa-bilibili text-gray"></i>
                                 </div>
                                 <h3 class="text-lg font-medium text-white">Bilibili</h3>
                             </div>
-                            <p class="text-blue-400 mt-2" data-i18n="misc.key35">@元气弹工作室</p>
+                            <p class="text-white mt-2" data-i18n="misc.key35">@元气弹工作室</p>
                         </a>
                         <!-- Discord -->
-                        <a class="flex flex-col items-center text-center hover:bg-blue-600/10 rounded-lg p-2 transition"
-                            href="https://discord.com/invite/YMYeyzu5jT" target="_blank">
+                        <a class="flex flex-col items-center text-center hover: rounded-lg p-2 transition"
+                            style="background-color:var(--color-card)" href="https://discord.com/invite/YMYeyzu5jT"
+                            target="_blank">
                             <div class="flex items-center space-x-4">
-                                <div class="bg-blue-600 rounded-lg p-3">
-                                    <i class="fab fa-discord text-white"></i>
+                                <div class=" rounded-lg p-3" style="background-color:var(--color-bg)">
+                                    <i class="fab fa-discord text-gray"></i>
                                 </div>
                                 <h3 class="text-lg font-medium text-white">Discord</h3>
                             </div>
-                            <p class="text-blue-400 mt-2">Whisper of the house</p>
+                            <p class="text-white mt-2">Whisper of the house</p>
                         </a>
                     </div>
                 </div>
@@ -336,11 +353,12 @@
         </div>
     </section>
     <!-- 页脚 -->
-    <footer class="bg-slate-900 border-t border-slate-800">
+    <footer class=" border-t border-slate-800" style="background-color: var(--color-bg-highlight)"
+        style="background-color: var(--color-bg-highlight)">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <h3 class="text-blue-400 text-xl font-bold mb-4" data-i18n="hero.studio">元气弹工作室</h3>
+                    <h3 class="text-white text-xl font-bold mb-4" data-i18n="hero.studio">元气弹工作室</h3>
                     <p class="text-gray-400 text-sm" data-i18n="footer.desc">
                         自2022年起创造数字冒险。专注于创新游戏玩法的独立游戏工作室。
                     </p>
@@ -348,41 +366,41 @@
                 <div>
                     <h4 class="text-white font-medium mb-4" data-i18n="nav.games">游戏作品</h4>
                     <ul class="space-y-2">
-                        <li><a class="text-gray-400 hover:text-blue-400 text-sm" data-i18n="misc.key36"
+                        <li><a class="text-gray-400 hover:text-blue-600 text-sm" data-i18n="misc.key36"
                                 href="https://store.steampowered.com/app/2589500" target="_blank">呓语小镇</a></li>
-                        <li><a class="text-gray-400 hover:text-blue-400 text-sm" data-i18n="misc.key37"
+                        <li><a class="text-gray-400 hover:text-blue-600 text-sm" data-i18n="misc.key37"
                                 href="https://store.steampowered.com/app/1737340" target="_blank">通神榜</a></li>
-                        <li><a class="text-gray-400 hover:text-blue-400 text-sm" data-i18n="misc.key38"
+                        <li><a class="text-gray-400 hover:text-blue-600 text-sm" data-i18n="misc.key38"
                                 href="https://store.steampowered.com/app/2812610" target="_blank">元气小剧场</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-white font-medium mb-4" data-i18n="misc.key39">公司信息</h4>
                     <ul class="space-y-2">
-                        <li><a class="text-gray-400 hover:text-blue-400 text-sm" data-i18n="misc.key40"
+                        <li><a class="text-gray-400 hover:text-blue-600 text-sm" data-i18n="misc.key40"
                                 href="#home">关于我们</a></li>
-                        <li><a class="text-gray-400 hover:text-blue-400 text-sm" data-i18n="misc.key41"
+                        <li><a class="text-gray-400 hover:text-blue-600 text-sm" data-i18n="misc.key41"
                                 href="#team">招聘信息</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="text-white font-medium mb-4" data-i18n="misc.key42">关注我们</h4>
                     <div class="flex space-x-4 mb-4">
-                        <a class="text-gray-400 hover:text-blue-400 transition"
+                        <a class="text-gray-400 hover:text-blue-600 transition"
                             href="https://space.bilibili.com/399953897?spm_id_from=333.337.0.0" target="_blank">
                             <i class="fab fa-bilibili"></i>
                         </a>
-                        <a class="text-gray-400 hover:text-blue-400 transition"
+                        <a class="text-gray-400 hover:text-blue-600 transition"
                             href="https://discord.com/invite/YMYeyzu5jT" target="_blank">
                             <i class="fab fa-discord"></i>
                         </a>
-                        <a class="text-gray-400 hover:text-blue-400 transition"
+                        <a class="text-gray-400 hover:text-blue-600 transition"
                             href="https://store.steampowered.com/search/?developer=%E5%85%83%E6%B0%94%E5%BC%B9%E5%B7%A5%E4%BD%9C%E5%AE%A4%28GD%20Studio%29"
                             target="_blank">
                             <i class="fab fa-steam"></i>
                         </a>
                     </div>
-                    <div class="text-gray-500 text-xs" data-i18n="footer.rights">
+                    <div class="text-white text-xs" data-i18n="footer.rights">
                         © 2023 元气弹工作室。保留所有权利。
                     </div>
                 </div>
@@ -457,24 +475,24 @@
                     const emptyStarsHTML = '<i class="far fa-star"></i>'.repeat(5 - stars - halfStar);
 
                     return `
-                <div class="game-card bg-slate-800 rounded-xl overflow-hidden shadow-lg">
+                <div class="game-card  rounded-xl overflow-hidden shadow-lg" style="background-color:var(  --color-subtle)">
                     <div class="relative">
                         <img src="${game.header_image}" class="w-full h-48 object-cover">
                     </div>
                     <div class="p-6">
                         <h3 class="text-xl font-bold text-white mb-2">${game.name}</h3>
-                        <p class="text-gray-400 text-sm mb-4">${game.short_description}</p>
+                        <p class="text-black-400 text-sm mb-4">${game.short_description}</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            ${game.genres.map(tag => `<span class="bg-blue-900/50 text-blue-300 text-xs px-2 py-1 rounded">${tag}</span>`).join('')}
+                            ${game.genres.map(tag => `<span class=" text-black text-xs px-2 py-1 rounded" style="background-color:var(--color-bg)">${tag}</span>`).join('')}
                         </div>
                         <div class="flex justify-between items-center">
                             <div class="text-yellow-400">
                                 ${fullStarsHTML}${halfStarHTML}${emptyStarsHTML}
-                                <span class="text-gray-400 ml-1 text-sm">
+                                <span class="text-black-400 ml-1 text-sm">
                                 ${game.positive_percentage && game.positive_percentage > 0 ? `（好评率 ${game.positive_percentage}%）` : '（即将发售）'}
                                 </span>
                             </div>
-                            <a href="${game.link}" target="_blank" class="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                            <a href="${game.link}" target="_blank" class="text-gray hover:text-white text-sm font-medium">
                                 Steam链接 <i class="fas fa-chevron-right ml-1"></i>
                             </a>
                         </div>
@@ -556,7 +574,7 @@
                     brightness = Math.min(1.2, p.opacity + boost * 1.5);
 
                     // 发光圈（描边模拟光晕）
-                    ctx.shadowColor = 'rgba(59, 130, 246, 0.6)';
+                    ctx.shadowColor = 'var(--color-glow)';
                     ctx.shadowBlur = 6 * boost;
                 } else {
                     ctx.shadowBlur = 0;
@@ -564,7 +582,10 @@
 
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(59, 130, 246, ${brightness})`;
+                const particleRGB = getComputedStyle(document.documentElement)
+                .getPropertyValue('--color-particle-rgb')
+                .trim();
+                ctx.fillStyle = `rgba(${particleRGB}, ${brightness})`;
                 ctx.fill();
 
                 p.x += p.dx;
@@ -623,7 +644,10 @@
                         ctx.moveTo(a.x, a.y);
                         ctx.lineTo(b.x, b.y);
                         const alpha = (1 - dist / maxDist) ** 1.5;  // 曲线衰减
-                        ctx.strokeStyle = `rgba(100, 149, 237, ${alpha * 0.15})`; // 柔和的亮蓝
+                        const lineRGB = getComputedStyle(document.documentElement)
+                        .getPropertyValue('--color-particle-rgb')
+                        .trim();
+                        ctx.strokeStyle = `rgba(${lineRGB}, ${alpha * 0.15})`;
                         ctx.lineWidth = 0.5 + alpha * 0.8; // 中心线略粗
                         ctx.stroke();
                     }
@@ -760,20 +784,20 @@
     </script>
     <script>
         let cachedGames = [];
-    
+
         function renderGames(lang = 'zh') {
             const container = document.getElementById('games-container');
             container.innerHTML = cachedGames.map(game => {
                 const percent = parseFloat(game.positive_percentage) || 0;
                 const stars = Math.floor(percent / 20);
                 const halfStar = percent % 20 >= 10 ? 1 : 0;
-    
+
                 const fullStarsHTML = '<i class="fas fa-star"></i>'.repeat(stars);
                 const halfStarHTML = halfStar ? '<i class="fas fa-star-half-alt"></i>' : '';
                 const emptyStarsHTML = '<i class="far fa-star"></i>'.repeat(5 - stars - halfStar);
-    
+
                 return `
-                    <div class="game-card bg-slate-800 rounded-xl overflow-hidden shadow-lg">
+                    <div class="game-card  rounded-xl overflow-hidden shadow-lg" style="background-color:var(  --color-card)">
                         <div class="relative">
                             <img src="${game.header_image}" class="w-full h-48 object-cover">
                         </div>
@@ -781,13 +805,13 @@
                             <h3 class="text-xl font-bold text-white mb-2">${game.name[lang]}</h3>
                             <p class="text-gray-400 text-sm mb-4">${game.short_description[lang]}</p>
                             <div class="flex flex-wrap gap-2 mb-4">
-                                ${game.genres[lang].map(tag => `<span class="bg-blue-900/50 text-blue-300 text-xs px-2 py-1 rounded">${tag}</span>`).join('')}
+                                ${game.genres[lang].map(tag => `<span class=" text-gray text-xs px-2 py-1 rounded" style="background-color:var(--color-bg-secondary)">${tag}</span>`).join('')}
                             </div>
                             <div class="flex justify-between items-center">
                                 ${game.positive_percentage ? `
                                 <div class="text-yellow-400">
                                     ${fullStarsHTML}${halfStarHTML}${emptyStarsHTML}
-                                    <span class="text-gray-400 ml-1 text-sm">
+                                    <span class="text-black-400 ml-1 text-sm">
                                     ${lang === 'zh' ? `（好评率 ${game.positive_percentage}%）` : `(Rating ${game.positive_percentage}%)`}
                                     </span>
                                 </div>
@@ -796,7 +820,7 @@
                                     ${lang === 'zh' ? '（即将发售）' : '(Coming Soon)'}
                                 </div>
                                 `}
-                                <a href="${game.link}" target="_blank" class="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                                <a href="${game.link}" target="_blank" class="text-white hover:text-yellow-300 text-sm font-medium">
                                     ${lang === 'zh' ? 'Steam链接' : 'Steam Link'} <i class="fas fa-chevron-right ml-1"></i>
                                 </a>
                             </div>
@@ -805,7 +829,7 @@
                 `;
             }).join('');
         }
-    
+
         fetch('steam/steamData.json')
             .then(res => res.json())
             .then(games => {
@@ -817,7 +841,7 @@
                 renderGames(currentLang);
             });
     </script>
-    
+
 </body>
 
 </html>

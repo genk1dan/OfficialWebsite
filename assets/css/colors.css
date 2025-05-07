@@ -1,0 +1,18 @@
+:root {
+  --color-bg: #cecece;
+  --color-bg-secondary: #dddddd;
+  --color-bg-highlight: #383838;
+  --color-text: #1f2937; /* 替代白色，例如深灰 */
+  --color-subtle: #5e6166; /* 替代灰色文字 */
+  --color-link: #3b82f6;   /* 替代蓝色文字 */
+  --color-blue: #3b82f6;
+  --color-blue-dark: #1e293b;
+  --color-glow: rgba(59, 130, 246, 0.6);
+  --color-card: #2b2b2b;
+  --color-panel: #334155;
+  --color-tag: rgba(30, 64, 175, 0.5);
+  --color-tag-text: #93c5fd;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-particle-rgb: 43, 43, 43;
+}
